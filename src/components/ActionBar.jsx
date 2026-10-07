@@ -1,17 +1,20 @@
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart, Truck } from 'lucide-react';
 
 export function ActionBar({ total, onCheckout }) {
+  const empty = total === 0;
+
   return (
-    <div className="rounded-[20px] p-5 px-7 bg-gray-900 border border-gray-800 flex items-center justify-between gap-4 flex-wrap shadow-[0_1px_6px_rgba(0,0,0,0.06)]">
+    <div className="rounded-[20px] p-5 px-7 bg-gradient-to-r from-gray-950 via-gray-900 to-gray-800 border border-gray-800 flex items-center justify-between gap-4 flex-wrap shadow-lg">
       <div>
-        <h2 className="text-xl font-bold text-neutral-50 mb-1">Ready to Rent?</h2>
-        <p className="text-[13px] text-gray-400">
+        <h2 className="text-xl font-bold text-neutral-50 mb-1 tracking-tight">Ready to Rent?</h2>
+        <p className="text-[13px] text-gray-400 inline-flex items-center gap-1.5">
+          <Truck size={14} className="text-gray-500" />
           Delivered &amp; assembled anywhere in Bali within 48h.
         </p>
       </div>
-      <button type="button" className="checkout-btn" disabled={total === 0} onClick={onCheckout}>
+      <button type="button" className="checkout-btn-light" disabled={empty} onClick={onCheckout}>
         <ShoppingCart size={18} />
-        Rent Setup — ${total}/mo
+        {empty ? 'Pick items to start' : `Rent Setup — $${total}/mo`}
       </button>
     </div>
   );

@@ -10,20 +10,20 @@
 }
 ::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.15);
-  border-radius: 10px;
+  border-radius: 6px;
 }
 
 .glass-card {
   background: #ffffff;
   border: 1px solid #e5e7eb;
-  border-radius: 20px;
+  border-radius: 6px;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
 }
 
 .product-card {
   background: #ffffff;
   border: 1.5px solid #e5e7eb;
-  border-radius: 16px;
+  border-radius: 6px;
   padding: 14px 10px;
   cursor: pointer;
   transition: all 0.22s ease;
@@ -75,7 +75,7 @@
   font-size: 11px;
   font-weight: 600;
   padding: 5px 14px;
-  border-radius: 20px;
+  border-radius: 6px;
   border: 1.5px solid #111827;
   background: #111827;
   color: #ffffff;
@@ -93,7 +93,7 @@
   background: #ef4444;
   color: white;
   border: none;
-  border-radius: 50%;
+  border-radius: 6px;
   width: 24px;
   height: 24px;
   display: flex;
@@ -112,7 +112,7 @@
 .canvas-bg {
   background: #f3f4f6;
   border: 1.5px dashed #d1d5db;
-  border-radius: 20px;
+  border-radius: 6px;
 }
 
 /* Subtle studio dot-grid over the canvas background */
@@ -128,7 +128,7 @@
   padding: 8px 18px;
   background: #ffffff;
   border: 1.5px solid #e5e7eb;
-  border-radius: 30px;
+  border-radius: 6px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
 }
 
@@ -146,17 +146,17 @@
 .modal-box {
   background: #ffffff;
   border: 1px solid #e5e7eb;
-  border-radius: 24px;
+  border-radius: 6px;
   max-width: 420px;
   width: 100%;
-  padding: 28px;
+  padding: 36px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
 }
 .modal-action-btn {
   flex: 1;
-  padding: 12px;
-  border-radius: 12px;
-  font-size: 14px;
+  padding: 14px;
+  border-radius: 6px;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
@@ -168,7 +168,7 @@
   background: #ffffff;
   color: #111827;
   border: none;
-  border-radius: 14px;
+  border-radius: 6px;
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;

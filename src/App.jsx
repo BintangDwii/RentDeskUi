@@ -5,13 +5,23 @@ import { ActionBar } from './components/ActionBar.jsx';
 import { CatalogPanel } from './components/CatalogPanel.jsx';
 import { CheckoutModal } from './components/CheckoutModal.jsx';
 import { Header } from './components/Header.jsx';
+import { ProductDetailModal } from './components/ProductDetailModal.jsx';
 import { Scene } from './components/Scene.jsx';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState(CATEGORIES.DESKS);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [detailProduct, setDetailProduct] = useState(null);
   const { setup, addToSetup, removeFromSetup, resetSetup, total, lamps, keyboards, mice, isEmpty } =
     useSetup();
+
+  const isInSetup = (product) => {
+    if (!product) return false;
+    if (product.type === 'desk') return setup.desk?.id === product.id;
+    if (product.type === 'chair') return setup.chair?.id === product.id;
+    if (product.type === 'monitor') return setup.monitors.some((m) => m.id === product.id);
+    return setup.accessories.some((a) => a.id === product.id);
+  };
 
   const confirmOrder = () => {
     alert("Order 'placed'! Thanks for trying the demo.");
@@ -29,6 +39,7 @@ export default function App() {
           onTabChange={setActiveTab}
           setup={setup}
           onAdd={addToSetup}
+          onDetail={setDetailProduct}
         />
 
         <div className="canvas-panel w-full lg:flex-1 flex flex-col gap-4">
@@ -41,9 +52,16 @@ export default function App() {
             isEmpty={isEmpty}
             onRemove={removeFromSetup}
           />
-          <ActionBar total={total} onCheckout={() => setIsCheckingOut(true)} />
+          <ActionBar setup={setup} total={total} onCheckout={() => setIsCheckingOut(true)} />
         </div>
       </div>
+
+      <ProductDetailModal
+        product={detailProduct}
+        isAdded={isInSetup(detailProduct)}
+        onAdd={addToSetup}
+        onClose={() => setDetailProduct(null)}
+      />
 
       {isCheckingOut && (
         <CheckoutModal
@@ -51,6 +69,7 @@ export default function App() {
           total={total}
           onClose={() => setIsCheckingOut(false)}
           onConfirm={confirmOrder}
+          onRemove={removeFromSetup}
         />
       )}
     </div>

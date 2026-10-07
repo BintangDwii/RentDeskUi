@@ -2,20 +2,10 @@ import { ChairLayer } from './ChairLayer.jsx';
 import { DeskLayer } from './DeskLayer.jsx';
 import { EmptyState } from './EmptyState.jsx';
 import { FloatingLayer } from './FloatingLayer.jsx';
-import { ProductImage } from './ProductImage.jsx';
-
-function SceneLabel({ image, name }) {
-  return (
-    <span className="inline-flex items-center gap-1.5 text-[10px] font-bold tracking-[0.06em] pl-1 pr-3 py-1 rounded-full uppercase bg-white border border-gray-200 text-gray-700 shadow-sm">
-      <ProductImage src={image} alt="" className="w-[18px] h-[18px] rounded-full bg-gray-50" />
-      {name}
-    </span>
-  );
-}
 
 /**
- * Visual canvas: total pill + scene (desk/chair/floating layers)
- * + label strip below the scene so tags never overlap sprites.
+ * Visual canvas: total pill + scene (desk/chair/floating layers).
+ * Item summary lives in the ActionBar below — canvas stays clean.
  */
 export function Scene({ setup, total, lamps, keyboards, mice, isEmpty, onRemove }) {
   const showFloating = !setup.desk && (setup.monitors.length > 0 || setup.accessories.length > 0);
@@ -56,14 +46,6 @@ export function Scene({ setup, total, lamps, keyboards, mice, isEmpty, onRemove 
           )}
         </div>
       </div>
-
-      {/* Item labels strip */}
-      {(setup.desk || setup.chair) && (
-        <div className="flex items-center justify-center gap-2 pt-3.5 flex-wrap">
-          {setup.desk && <SceneLabel image={setup.desk.image} name={setup.desk.name} />}
-          {setup.chair && <SceneLabel image={setup.chair.image} name={setup.chair.name} />}
-        </div>
-      )}
     </div>
   );
 }

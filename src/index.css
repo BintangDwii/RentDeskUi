@@ -1,0 +1,6 @@
+@import 'tailwindcss';
+@import './styles/App.css';
+
+body {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+}

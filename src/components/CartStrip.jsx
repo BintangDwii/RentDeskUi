@@ -54,25 +54,36 @@ function CartCard({ group, onRemoveOne }) {
  * Horizontal cart strip above the canvas. Hidden when empty.
  * Duplicates collapse to one card with `×n` and multiplied price.
  */
-export function CartStrip({ setup, total, onRemove }) {
+export function CartStrip({ setup, total, onRemove, onClear }) {
   const groups = summarize(setup);
   if (groups.length === 0) return null;
 
+  const itemCount = groups.reduce((n, g) => n + g.instances.length, 0);
+
   return (
-    <div className="glass-card p-4">
-      <div className="flex items-center justify-between mb-3">
-        <p className="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-[0.08em] uppercase text-gray-500">
-          <ShoppingCart size={13} />
+    <div className="glass-card cart-enter p-4">
+      <div className="flex items-center justify-between mb-3 gap-2">
+        <p className="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-[0.08em] uppercase text-gray-600">
+          <ShoppingCart size={13} aria-hidden="true" />
           Your cart
           <span className="bg-gray-900 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-[6px] tabular-nums">
-            {groups.reduce((n, g) => n + g.instances.length, 0)}
+            {itemCount}
           </span>
         </p>
-        <p className="text-[13px] text-gray-500">
-          Total{' '}
-          <span className="text-base font-extrabold text-gray-900 tabular-nums">${total}</span>
-          <span className="text-[11px]">/mo</span>
-        </p>
+        <div className="flex items-center gap-3">
+          <p className="text-[13px] text-gray-500">
+            Total{' '}
+            <span className="text-base font-extrabold text-gray-900 tabular-nums">${total}</span>
+            <span className="text-[11px]">/mo</span>
+          </p>
+          <button
+            type="button"
+            onClick={onClear}
+            className="text-[11px] font-semibold text-gray-400 hover:text-red-600 underline underline-offset-2 transition-colors"
+          >
+            Clear all
+          </button>
+        </div>
       </div>
       <div className="flex gap-2.5 overflow-x-auto pb-1">
         {groups.map((g) => (

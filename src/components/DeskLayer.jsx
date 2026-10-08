@@ -9,11 +9,12 @@ import { RemoveButton } from './RemoveButton.jsx';
  */
 export function DeskLayer({ desk, monitors, lamps, keyboards, mice, onRemove }) {
   return (
-    <div className="group-item absolute bottom-[60px] left-1/2 -translate-x-1/2 w-[88%] z-[5]">
+    <div className="group-item absolute bottom-[60px] left-1/2 -translate-x-1/2 w-[88%] max-w-[440px] z-[5]">
       <RemoveButton
         size={16}
+        label={`Remove ${desk.name}`}
         onRemove={() => onRemove('desk')}
-        style={{ top: -28, left: '50%', transform: 'translateX(-50%)' }}
+        style={{ top: -32, left: '50%', transform: 'translateX(-50%)' }}
       />
 
       {/* Desk image */}

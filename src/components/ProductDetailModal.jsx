@@ -25,6 +25,7 @@ import {
   Zap,
 } from 'lucide-react';
 import { ProductImage } from './ProductImage.jsx';
+import { useModalBehaviour } from '../hooks/useModal.js';
 
 const SPEC_ICONS = {
   ruler: Ruler,
@@ -67,12 +68,18 @@ function Rating({ value, reviews }) {
   );
 }
 
-export function ProductDetailModal({ product, isAdded, onAdd, onClose }) {
+export function ProductDetailModal({ product, isAdded, isSingleton, onAdd, onClose }) {
+  useModalBehaviour(product ? onClose : null);
   if (!product) return null;
+
+  const ctaLabel = isAdded ? (isSingleton ? 'In your setup' : 'Add another') : 'Add to setup';
 
   return (
     <div className="modal-overlay modal-fade" onClick={onClose}>
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-label={`${product.name} details`}
         className="modal-box modal-pop relative !max-w-2xl !p-0 overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
@@ -140,12 +147,16 @@ export function ProductDetailModal({ product, isAdded, onAdd, onClose }) {
                 type="button"
                 className="modal-action-btn !flex-none px-6 bg-gray-900 text-white shadow-[0_4px_14px_rgba(0,0,0,0.2)] hover:bg-gray-700 inline-flex items-center justify-center gap-1.5"
                 onClick={() => {
+                  if (isAdded && isSingleton) {
+                    onClose();
+                    return;
+                  }
                   onAdd(product);
                   onClose();
                 }}
               >
-                {isAdded ? <ShoppingCart size={15} /> : <Plus size={15} />}
-                {isAdded ? 'Add another' : 'Add to setup'}
+                {isAdded ? isSingleton ? <ShoppingCart size={15} /> : <Plus size={15} /> : <Plus size={15} />}
+                {ctaLabel}
               </button>
             </div>
           </div>

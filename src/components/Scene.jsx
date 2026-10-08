@@ -7,20 +7,25 @@ import { FloatingLayer } from './FloatingLayer.jsx';
  * Visual canvas: total pill + scene (desk/chair/floating layers).
  * Item summary lives in the ActionBar below — canvas stays clean.
  */
-export function Scene({ setup, total, lamps, keyboards, mice, isEmpty, onRemove }) {
+export function Scene({ setup, total, lamps, keyboards, mice, isEmpty, onRemove, onBrowse }) {
   const showFloating = !setup.desk && (setup.monitors.length > 0 || setup.accessories.length > 0);
 
   return (
-    <div className="glass-card p-5 relative">
+    <div className="glass-card p-5 relative !shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
       {/* Total badge */}
       <div className="absolute top-4 right-4 z-10 total-pill !bg-white/85 !backdrop-blur-md !shadow-lg">
-        <span className="text-xs text-gray-500 font-medium">Monthly</span>
-        <span className="text-xl font-extrabold text-gray-900 tabular-nums">${total}</span>
+        <span className="text-xs text-gray-600 font-medium">Monthly</span>
+        <span className="text-xl font-extrabold text-gray-900 tabular-nums" aria-live="polite">
+          ${total}
+        </span>
       </div>
 
       {/* Visual stage */}
-      <div className="canvas-bg canvas-grid relative w-full h-[480px] overflow-hidden flex items-end justify-center">
-        {isEmpty && <EmptyState />}
+      <div className="canvas-bg canvas-grid relative w-full h-[480px] max-h-[60vh] min-h-[380px] overflow-hidden flex items-end justify-center">
+        {isEmpty && <EmptyState onBrowse={onBrowse} />}
+
+        {/* Studio floor */}
+        {!isEmpty && <div className="canvas-floor" aria-hidden="true" />}
 
         {/* Scene wrapper — centers everything horizontally */}
         <div className="relative w-full max-w-[580px] h-full">
@@ -45,6 +50,13 @@ export function Scene({ setup, total, lamps, keyboards, mice, isEmpty, onRemove 
             />
           )}
         </div>
+
+        {/* Hint strip when desk missing but items floating */}
+        {showFloating && (
+          <p className="absolute bottom-3 left-1/2 -translate-x-1/2 text-[11px] font-medium text-gray-500 bg-white/85 backdrop-blur px-3 py-1.5 rounded-full border border-gray-200 shadow-sm whitespace-nowrap">
+            Add a desk to anchor your setup
+          </p>
+        )}
       </div>
     </div>
   );

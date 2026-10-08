@@ -1,14 +1,41 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { MAX_MONITORS, SINGLETON_ACCESSORY_IDS } from '../data/catalog.js';
 
 const EMPTY_SETUP = { desk: null, chair: null, monitors: [], accessories: [] };
+const STORAGE_KEY = 'rentdesk-setup-v1';
+
+function loadInitial() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return EMPTY_SETUP;
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== 'object') return EMPTY_SETUP;
+    return {
+      desk: parsed.desk ?? null,
+      chair: parsed.chair ?? null,
+      monitors: Array.isArray(parsed.monitors) ? parsed.monitors : [],
+      accessories: Array.isArray(parsed.accessories) ? parsed.accessories : [],
+    };
+  } catch {
+    return EMPTY_SETUP;
+  }
+}
 
 /**
  * Workspace setup state: desk + chair + monitors + accessories.
  * Singleton accessories (keyboard, mouse) replace the previous one on re-add.
+ * Persists to localStorage; supports snapshot restore for Undo.
  */
 export function useSetup() {
-  const [setup, setSetup] = useState(EMPTY_SETUP);
+  const [setup, setSetup] = useState(loadInitial);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(setup));
+    } catch {
+      // storage unavailable (private mode) — ignore
+    }
+  }, [setup]);
 
   const addToSetup = (product) => {
     setSetup((prev) => {
@@ -48,6 +75,16 @@ export function useSetup() {
 
   const resetSetup = () => setSetup(EMPTY_SETUP);
 
+  const restoreSetup = (snapshot) => {
+    if (!snapshot || typeof snapshot !== 'object') return;
+    setSetup({
+      desk: snapshot.desk ?? null,
+      chair: snapshot.chair ?? null,
+      monitors: Array.isArray(snapshot.monitors) ? snapshot.monitors : [],
+      accessories: Array.isArray(snapshot.accessories) ? snapshot.accessories : [],
+    });
+  };
+
   const total = useMemo(() => {
     let sum = 0;
     if (setup.desk) sum += setup.desk.price;
@@ -71,6 +108,7 @@ export function useSetup() {
     addToSetup,
     removeFromSetup,
     resetSetup,
+    restoreSetup,
     total,
     lamps,
     keyboards,

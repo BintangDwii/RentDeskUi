@@ -13,10 +13,19 @@
   border-radius: 6px;
 }
 
+/* Focus visibility — keyboard users */
+:focus-visible {
+  outline: 2px solid #111827;
+  outline-offset: 2px;
+}
+button:focus:not(:focus-visible) {
+  outline: none;
+}
+
 .glass-card {
   background: #ffffff;
   border: 1px solid #e5e7eb;
-  border-radius: 6px;
+  border-radius: 12px;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
 }
 
@@ -93,32 +102,62 @@
   background: #ef4444;
   color: white;
   border: none;
-  border-radius: 6px;
-  width: 24px;
-  height: 24px;
+  border-radius: 8px;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   opacity: 0;
-  transition: opacity 0.2s;
+  transition:
+    opacity 0.2s,
+    transform 0.2s,
+    background 0.2s;
   z-index: 20;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
-.group-item:hover .remove-btn {
+.remove-btn:hover {
+  background: #dc2626;
+  transform: scale(1.06);
+}
+.remove-btn:focus-visible {
   opacity: 1;
+  outline: 2px solid #111827;
+  outline-offset: 2px;
+}
+.group-item:hover .remove-btn,
+.group-item:focus-within .remove-btn {
+  opacity: 1;
+}
+/* Touch devices have no hover — always show remove controls */
+@media (hover: none) {
+  .remove-btn {
+    opacity: 1;
+  }
 }
 
 .canvas-bg {
   background: #f3f4f6;
   border: 1.5px dashed #d1d5db;
-  border-radius: 6px;
+  border-radius: 12px;
 }
 
 /* Subtle studio dot-grid over the canvas background */
 .canvas-grid {
   background-image: radial-gradient(circle, #e2e5ea 1px, transparent 1px);
   background-size: 22px 22px;
+}
+/* Studio floor shadow under desk/chair */
+.canvas-floor {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 72%;
+  height: 26px;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.16) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .total-pill {
@@ -128,7 +167,7 @@
   padding: 8px 18px;
   background: #ffffff;
   border: 1.5px solid #e5e7eb;
-  border-radius: 6px;
+  border-radius: 999px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
 }
 
@@ -146,7 +185,7 @@
 .modal-box {
   background: #ffffff;
   border: 1px solid #e5e7eb;
-  border-radius: 6px;
+  border-radius: 16px;
   max-width: 420px;
   width: 100%;
   padding: 36px;
@@ -207,5 +246,40 @@
   from {
     opacity: 0;
     transform: translateY(12px) scale(0.98);
+  }
+}
+
+/* Cart strip entrance — softens layout shift when first item lands */
+.cart-enter {
+  animation: cart-slide-in 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes cart-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+/* Toast entrance */
+.toast-enter {
+  animation: toast-slide-up 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes toast-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-fade,
+  .modal-pop,
+  .cart-enter,
+  .toast-enter,
+  .product-card,
+  .product-card:hover {
+    animation: none;
+    transition: none;
+    transform: none;
   }
 }

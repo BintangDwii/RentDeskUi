@@ -1,5 +1,14 @@
 import { useState } from 'react';
-import { Clock, MapPin, ShieldCheck, ShoppingCart, Truck, Wrench, X } from 'lucide-react';
+import {
+  CheckCircle2,
+  Clock,
+  MapPin,
+  ShieldCheck,
+  ShoppingCart,
+  Truck,
+  Wrench,
+  X,
+} from 'lucide-react';
 import { DELIVERY, RENTAL_PLANS } from '../data/catalog.js';
 import {
   contractTotal,
@@ -9,12 +18,13 @@ import {
   getPlan,
 } from '../utils/pricing.js';
 import { ProductImage } from './ProductImage.jsx';
+import { useModalBehaviour } from '../hooks/useModal.js';
 
 const DELIVERY_ICONS = [Truck, Wrench, ShieldCheck];
 
 function SectionTitle({ children }) {
   return (
-    <p className="text-[11px] font-semibold text-gray-400 tracking-[0.08em] uppercase mb-3">
+    <p className="text-[11px] font-semibold text-gray-500 tracking-[0.08em] uppercase mb-3">
       {children}
     </p>
   );
@@ -24,7 +34,7 @@ function ItemRow({ image, name, price, onRemove }) {
   return (
     <li className="flex justify-between items-center gap-2.5 py-1.5">
       <span className="inline-flex items-center gap-2.5 min-w-0">
-        <span className="w-11 h-11 shrink-0 flex items-center justify-center bg-white border border-gray-200 rounded-[6px] p-1">
+        <span className="w-11 h-11 shrink-0 flex items-center justify-center bg-white border border-gray-200 rounded-[8px] p-1">
           <ProductImage src={image} alt="" className="w-full h-full" />
         </span>
         <span className="truncate text-sm font-medium text-gray-700">{name}</span>
@@ -35,9 +45,9 @@ function ItemRow({ image, name, price, onRemove }) {
           type="button"
           aria-label={`Remove ${name}`}
           onClick={onRemove}
-          className="w-5 h-5 flex items-center justify-center rounded-[6px] bg-gray-100 text-gray-400 hover:bg-red-100 hover:text-red-600 transition-colors"
+          className="w-7 h-7 flex items-center justify-center rounded-[8px] bg-gray-100 text-gray-500 hover:bg-red-100 hover:text-red-600 transition-colors"
         >
-          <X size={11} />
+          <X size={13} />
         </button>
       </span>
     </li>
@@ -71,8 +81,9 @@ function BreakdownCell({ label, value, accent = false, highlight = false }) {
   );
 }
 
-export function CheckoutModal({ setup, total, onClose, onConfirm, onRemove }) {
-  const [months, setMonths] = useState(1);
+export function CheckoutModal({ setup, total, placedOrder, onClose, onConfirm, onRemove }) {
+  useModalBehaviour(onClose);
+  const [months, setMonths] = useState(placedOrder?.months ?? 1);
   const plan = getPlan(months);
 
   const groups = [
@@ -133,9 +144,44 @@ export function CheckoutModal({ setup, total, onClose, onConfirm, onRemove }) {
   return (
     <div className="modal-overlay modal-fade" onClick={onClose}>
       <div
-        className="modal-box modal-pop !max-w-5xl max-h-[88vh] overflow-y-auto"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Review your rental"
+        className="modal-box modal-pop !max-w-5xl max-h-[88vh] overflow-y-auto !p-6 sm:!p-9"
         onClick={(e) => e.stopPropagation()}
       >
+        {placedOrder ? (
+          <div className="text-center py-8 px-4">
+            <div className="w-16 h-16 mx-auto rounded-full bg-emerald-100 flex items-center justify-center mb-5">
+              <CheckCircle2 size={32} className="text-emerald-600" aria-hidden="true" />
+            </div>
+            <h3 className="text-2xl font-bold text-gray-900 tracking-tight mb-2">
+              Order placed — thank you!
+            </h3>
+            <p className="text-sm text-gray-500 max-w-md mx-auto leading-relaxed">
+              Your {placedOrder.months}-month rental
+              {placedOrder.contract ? (
+                <>
+                  {' '}— <span className="font-bold text-gray-900 tabular-nums">${placedOrder.contract}</span> total
+                  (<span className="tabular-nums">${placedOrder.monthly}/mo</span>)
+                </>
+              ) : null}{' '}
+              is confirmed for this demo. We&apos;ll deliver &amp; assemble anywhere in Bali within
+              48h.
+            </p>
+            <div className="flex gap-3 max-w-sm mx-auto mt-7">
+              <button
+                type="button"
+                autoFocus
+                className="modal-action-btn bg-gray-900 text-white shadow-[0_4px_14px_rgba(0,0,0,0.2)] hover:bg-gray-700"
+                onClick={onClose}
+              >
+                Start a new setup
+              </button>
+            </div>
+          </div>
+        ) : (
+          <>
         {/* Header */}
         <div className="flex items-center gap-3 mb-6">
           <div className="w-11 h-11 rounded-[6px] bg-gradient-to-br from-gray-800 to-gray-950 flex items-center justify-center shadow-md shrink-0">
@@ -260,7 +306,7 @@ export function CheckoutModal({ setup, total, onClose, onConfirm, onRemove }) {
         </div>
 
         {/* Actions */}
-        <div className="flex gap-3">
+        <div className="flex gap-3 sticky bottom-0 bg-white pt-3 pb-1 border-t border-gray-100">
           <button
             type="button"
             className="modal-action-btn bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200"
@@ -271,11 +317,13 @@ export function CheckoutModal({ setup, total, onClose, onConfirm, onRemove }) {
           <button
             type="button"
             className="modal-action-btn bg-gray-900 text-white shadow-[0_4px_14px_rgba(0,0,0,0.2)] hover:bg-gray-700 tabular-nums"
-            onClick={onConfirm}
+            onClick={() => onConfirm({ contract, months: plan.months, monthly })}
           >
             Confirm — ${contract}
           </button>
         </div>
+          </>
+        )}
       </div>
     </div>
   );

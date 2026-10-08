@@ -17,6 +17,7 @@ export function ChairLayer({ chair, onRemove }) {
     >
       <RemoveButton
         size={16}
+        label={`Remove ${chair.name}`}
         onRemove={() => onRemove('chair')}
         style={{ top: -10, left: '50%', transform: 'translateX(-50%)' }}
       />

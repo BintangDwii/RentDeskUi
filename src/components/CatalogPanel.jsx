@@ -4,20 +4,64 @@ import { ProductCard } from './ProductCard.jsx';
 export function CatalogPanel({ activeTab, onTabChange, setup, onAdd, onDetail }) {
   const monitorsFull = setup.monitors.length >= MAX_MONITORS;
 
+  const tabCount = (cat) => {
+    if (cat === CATEGORIES.DESKS) return setup.desk ? 1 : 0;
+    if (cat === CATEGORIES.CHAIRS) return setup.chair ? 1 : 0;
+    return setup.monitors.length + setup.accessories.length;
+  };
+
+  const cardState = (product) => {
+    if (product.type === 'desk') {
+      const added = setup.desk?.id === product.id;
+      return { isAdded: added, qty: added ? 1 : 0, disabled: false, disabledReason: '' };
+    }
+    if (product.type === 'chair') {
+      const added = setup.chair?.id === product.id;
+      return { isAdded: added, qty: added ? 1 : 0, disabled: false, disabledReason: '' };
+    }
+    if (product.type === 'monitor') {
+      const qty = setup.monitors.filter((m) => m.id === product.id).length;
+      const disabled = monitorsFull;
+      return {
+        isAdded: qty > 0,
+        qty,
+        disabled,
+        disabledReason: disabled ? `Max ${MAX_MONITORS} monitors reached` : '',
+      };
+    }
+    const qty = setup.accessories.filter((a) => a.id === product.id).length;
+    return { isAdded: qty > 0, qty, disabled: false, disabledReason: '' };
+  };
+
   return (
-    <div className="catalog-panel glass-card w-full lg:w-[300px] shrink-0 flex flex-col h-[640px] max-h-[320px] lg:max-h-none overflow-hidden">
+    <div id="catalog-panel" className="catalog-panel glass-card w-full lg:w-[300px] shrink-0 flex flex-col h-[640px] max-h-[320px] lg:max-h-none lg:sticky lg:top-4 overflow-hidden">
       {/* Tabs */}
-      <div className="flex border-b border-gray-200">
+      <div className="flex border-b border-gray-200" role="tablist" aria-label="Catalog categories">
         {Object.values(CATEGORIES).map((cat) => {
           const Icon = CAT_ICONS[cat];
+          const active = activeTab === cat;
+          const count = tabCount(cat);
           return (
             <button
               key={cat}
               type="button"
-              className={`tab-btn ${activeTab === cat ? 'active' : ''}`}
+              role="tab"
+              aria-selected={active}
+              aria-label={`${cat}, ${count} selected`}
+              className={`tab-btn ${active ? 'active' : ''}`}
               onClick={() => onTabChange(cat)}
             >
-              <Icon size={13} /> {cat}
+              <Icon size={13} aria-hidden="true" /> {cat}
+              {count > 0 && (
+                <span
+                  aria-hidden="true"
+                  className={`text-[10px] font-bold px-1.5 py-0.5 rounded-[6px] tabular-nums ${
+                    active ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-600'
+                  }`}
+                >
+                  {count}
+                </span>
+              )}
             </button>
           );
         })}
@@ -27,12 +71,18 @@ export function CatalogPanel({ activeTab, onTabChange, setup, onAdd, onDetail })
       <div className="flex-1 overflow-y-auto p-3.5">
         <div className="grid grid-cols-2 gap-2.5">
           {PRODUCTS.filter((p) => p.category === activeTab).map((product) => (
-            <ProductCard key={product.id} product={product} onAdd={onAdd} onDetail={onDetail} />
+            <ProductCard
+              key={product.id}
+              product={product}
+              onAdd={onAdd}
+              onDetail={onDetail}
+              {...cardState(product)}
+            />
           ))}
         </div>
         {activeTab === CATEGORIES.ACCESSORIES && monitorsFull && (
-          <p className="text-center mt-3 text-[11px] text-amber-900 bg-amber-100 px-3 py-1.5 rounded-[6px] border border-amber-200">
-            Max {MAX_MONITORS} monitors reached
+          <p role="status" className="text-center mt-3 text-[11px] text-amber-900 bg-amber-100 px-3 py-1.5 rounded-[6px] border border-amber-200">
+            Max {MAX_MONITORS} monitors reached — remove one to swap
           </p>
         )}
       </div>

@@ -1,37 +1,9 @@
 import { CATEGORIES, CAT_ICONS, MAX_MONITORS, PRODUCTS } from '../data/catalog.js';
+import { getCardState, getTabCount } from '../utils/setup.js';
 import { ProductCard } from './ProductCard.jsx';
 
 export function CatalogPanel({ activeTab, onTabChange, setup, onAdd, onDetail }) {
   const monitorsFull = setup.monitors.length >= MAX_MONITORS;
-
-  const tabCount = (cat) => {
-    if (cat === CATEGORIES.DESKS) return setup.desk ? 1 : 0;
-    if (cat === CATEGORIES.CHAIRS) return setup.chair ? 1 : 0;
-    return setup.monitors.length + setup.accessories.length;
-  };
-
-  const cardState = (product) => {
-    if (product.type === 'desk') {
-      const added = setup.desk?.id === product.id;
-      return { isAdded: added, qty: added ? 1 : 0, disabled: false, disabledReason: '' };
-    }
-    if (product.type === 'chair') {
-      const added = setup.chair?.id === product.id;
-      return { isAdded: added, qty: added ? 1 : 0, disabled: false, disabledReason: '' };
-    }
-    if (product.type === 'monitor') {
-      const qty = setup.monitors.filter((m) => m.id === product.id).length;
-      const disabled = monitorsFull;
-      return {
-        isAdded: qty > 0,
-        qty,
-        disabled,
-        disabledReason: disabled ? `Max ${MAX_MONITORS} monitors reached` : '',
-      };
-    }
-    const qty = setup.accessories.filter((a) => a.id === product.id).length;
-    return { isAdded: qty > 0, qty, disabled: false, disabledReason: '' };
-  };
 
   return (
     <div
@@ -47,7 +19,7 @@ export function CatalogPanel({ activeTab, onTabChange, setup, onAdd, onDetail })
         {Object.values(CATEGORIES).map((cat) => {
           const Icon = CAT_ICONS[cat];
           const active = activeTab === cat;
-          const count = tabCount(cat);
+          const count = getTabCount(setup, cat);
           return (
             <button
               key={cat}
@@ -87,7 +59,7 @@ export function CatalogPanel({ activeTab, onTabChange, setup, onAdd, onDetail })
               index={i}
               onAdd={onAdd}
               onDetail={onDetail}
-              {...cardState(product)}
+              {...getCardState(setup, product)}
             />
           ))}
         </div>

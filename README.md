@@ -19,12 +19,20 @@ npm run format   # prettier write
 public/assets/            # product PNGs (served as /assets/...)
 src/
   main.jsx                # React entry
-  App.jsx                 # thin orchestrator (~60 lines)
+  App.jsx                 # thin layout shell (~100 lines)
   index.css               # tailwind import + App.css + body font
   styles/App.css          # reusable branded classes (cards, buttons, modal…)
-  data/catalog.js         # CATEGORIES, PRODUCTS, MAX_MONITORS, singletons
-  hooks/useSetup.js       # setup state (add/remove/total + selectors)
-  utils/layout.js         # getMonitorWidth() scene sizing
+  data/catalog.js         # CATEGORIES, PRODUCTS, MAX_MONITORS, singletons, plans
+  hooks/
+    useSetup.js           # persisted setup state (add/remove/total + selectors)
+    useSetupActions.js    # useSetup + toast/undo UX (add/remove/clear)
+    useToast.js           # transient toast state
+    useModal.js           # scroll-lock + Escape handling
+    useAnimatedNumber.js  # tweened numbers
+  utils/
+    setup.js              # setup domain logic (singletons, membership, card state)
+    layout.js             # getMonitorWidth() scene sizing
+    pricing.js            # plan discounts, contract/deposit math
   components/
     Header.jsx            # page hero
     CatalogPanel.jsx      # tabs + product grid
@@ -37,13 +45,28 @@ src/
     FloatingLayer.jsx     # accessories shown before a desk is picked
     EmptyState.jsx        # faded desk+chair placeholder
     ActionBar.jsx         # rent CTA bar
-    CheckoutModal.jsx     # order summary modal
+    CartStrip.jsx         # horizontal cart summary
+    Toast.jsx             # undo toast
+    CheckoutModal.jsx     # order summary modal (orchestrator)
+    ProductDetailModal.jsx# product detail modal (orchestrator)
+    ui/                   # Modal shell, Rating
+    checkout/             # OrderSuccess, SetupSummary, RentalDuration,
+                          # PriceBreakdown, DeliveryInfo, SectionTitle, groups
+    product/              # ProductImagePanel, ProductInfoPanel, ProductSpecList
+    scene/                # MonitorItem, SceneRemoveButton
+    icons/specIcons.js    # spec key → Lucide icon map
 ```
 
 ## Conventions
 
-- **State** lives in `hooks/useSetup.js`. Components stay presentational and
-  receive data + callbacks via props.
+- **State** lives in `hooks/useSetup.js` (raw setup) and
+  `hooks/useSetupActions.js` (setup + toast/undo UX). Components stay
+  presentational and receive data + callbacks via props.
+- **Setup rules** (singletons, membership, item names, catalog card state)
+  live in `utils/setup.js` — one source of truth shared by the hook and UI.
+- **Modals** share the `components/ui/Modal.jsx` shell (overlay, Escape,
+  scroll-lock, click-outside, close button). Feature bodies are split under
+  `components/checkout/` and `components/product/`.
 - **Styling** is Tailwind-first (utilities inline). Only genuinely reusable
   branded pieces live in `styles/App.css`. Dynamic values (pixel widths,
   percentage offsets) stay as `style` props.

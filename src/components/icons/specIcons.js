@@ -1,0 +1,49 @@
+import {
+  Activity,
+  BatteryCharging,
+  Bluetooth,
+  Cable,
+  Expand,
+  Keyboard,
+  Layers,
+  LayoutGrid,
+  Lock,
+  Monitor,
+  Mouse,
+  Move,
+  RotateCw,
+  Ruler,
+  ShieldCheck,
+  SlidersHorizontal,
+  Sun,
+  VolumeX,
+  Weight,
+  Zap,
+} from 'lucide-react';
+
+/**
+ * Maps the short icon keys used in product `specs` to Lucide components.
+ * Keeps `data/catalog.js` serializable (no component references).
+ */
+export const SPEC_ICONS = {
+  ruler: Ruler,
+  expand: Expand,
+  weight: Weight,
+  zap: Zap,
+  layers: Layers,
+  cable: Cable,
+  monitor: Monitor,
+  move: Move,
+  shield: ShieldCheck,
+  lock: Lock,
+  sun: Sun,
+  sliders: SlidersHorizontal,
+  rotate: RotateCw,
+  keyboard: Keyboard,
+  bluetooth: Bluetooth,
+  battery: BatteryCharging,
+  grid: LayoutGrid,
+  mouse: Mouse,
+  volume: VolumeX,
+  activity: Activity,
+};

@@ -303,10 +303,10 @@ button:focus:not(:focus-visible) {
 /* Studio floor shadow under desk/chair */
 .canvas-floor {
   position: absolute;
-  bottom: 5%;
+  bottom: 8%;
   left: 50%;
   transform: translateX(-50%);
-  width: 72%;
+  width: 64%;
   height: 26px;
   background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.16) 0%, transparent 70%);
   pointer-events: none;

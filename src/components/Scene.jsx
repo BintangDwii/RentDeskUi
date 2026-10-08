@@ -23,14 +23,14 @@ export function Scene({ setup, total, lamps, keyboards, mice, isEmpty, onRemove,
       </div>
 
       {/* Visual stage */}
-      <div className="canvas-bg canvas-grid relative w-full aspect-[4/3] max-h-[480px] overflow-hidden flex items-end justify-center">
+      <div className="canvas-bg canvas-grid relative w-full aspect-[1/1] sm:aspect-[4/3] max-h-[560px] overflow-hidden flex items-end justify-center p-3 sm:p-8 pt-14 sm:pt-16 pb-8 sm:pb-12">
         {isEmpty && <EmptyState onBrowse={onBrowse} />}
 
         {/* Studio floor */}
         {!isEmpty && <div className="canvas-floor" aria-hidden="true" />}
 
         {/* Scene wrapper — centers everything horizontally */}
-        <div className="relative w-full max-w-[680px] h-full">
+        <div className="relative w-full max-w-[600px] h-full">
           {setup.desk && (
             <DeskLayer
               desk={setup.desk}

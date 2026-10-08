@@ -1,6 +1,6 @@
-import { getMonitorWidth, getMonitorWidthMobile } from '../utils/layout.js';
 import { ProductImage } from './ProductImage.jsx';
-import { RemoveButton } from './RemoveButton.jsx';
+import { MonitorItem } from './scene/MonitorItem.jsx';
+import { SceneRemoveButton } from './scene/SceneRemoveButton.jsx';
 
 /**
  * Desk is the scene anchor. Monitors float above the desk surface (back row),
@@ -9,12 +9,12 @@ import { RemoveButton } from './RemoveButton.jsx';
  */
 export function DeskLayer({ desk, monitors, lamps, keyboards, mice, onRemove }) {
   return (
-    <div className="group-item scene-drop absolute bottom-[8%] left-1/2 -translate-x-1/2 w-[88%] max-w-[440px] z-[5]">
-      <RemoveButton
-        size={16}
-        label={`Remove ${desk.name}`}
+    <div className="group-item scene-drop absolute bottom-[12%] left-1/2 -translate-x-1/2 w-[84%] max-w-[440px] z-[5]">
+      <SceneRemoveButton
         onRemove={() => onRemove('desk')}
-        style={{ top: -32, left: '50%', transform: 'translateX(-50%)' }}
+        label={`Remove ${desk.name}`}
+        offset={-32}
+        size={16}
       />
 
       {/* Desk image */}
@@ -28,28 +28,15 @@ export function DeskLayer({ desk, monitors, lamps, keyboards, mice, onRemove }) 
           monitors squeeze side-by-side on mobile instead of wrapping over
           each other. Basis ratio 1 : 1.32 preserves ultrawide width. */}
       {monitors.length > 0 && (
-        <div className="monitor-row absolute bottom-[86%] left-1/2 -translate-x-1/2 flex w-full sm:w-[112%] max-w-none flex-nowrap items-end justify-center gap-0 z-[6]">
+        <div className="monitor-row absolute bottom-[86%] left-1/2 -translate-x-1/2 flex w-[112%] max-w-none flex-nowrap items-end justify-center gap-0 z-[6]">
           {monitors.map((m, i) => (
-            <div
+            <MonitorItem
               key={m.instanceId}
-              className={`group-item scene-drop relative flex flex-col items-center ${m.id === 'acc-monitor-2' ? 'monitor-item-wide' : 'monitor-item'}`}
-              style={{ animationDelay: `${i * 60}ms` }}
-            >
-              <RemoveButton
-                onRemove={() => onRemove('monitor', m.instanceId)}
-                style={{ top: -10, left: '50%', transform: 'translateX(-50%)' }}
-              />
-              <ProductImage
-                src={m.image}
-                alt={m.name}
-                className="monitor-img"
-                style={{
-                  '--mw': `${getMonitorWidth(m)}px`,
-                  '--mw-mobile': `${getMonitorWidthMobile(m)}px`,
-                  filter: 'drop-shadow(0 12px 28px rgba(0,0,0,0.8))',
-                }}
-              />
-            </div>
+              monitor={m}
+              index={i}
+              onRemove={onRemove}
+              className="flex flex-col items-center"
+            />
           ))}
         </div>
       )}
@@ -61,10 +48,7 @@ export function DeskLayer({ desk, monitors, lamps, keyboards, mice, onRemove }) 
           className="group-item scene-drop absolute bottom-[76%] right-[8%] z-[7] flex flex-col items-center"
           style={{ animationDelay: `${i * 60}ms` }}
         >
-          <RemoveButton
-            onRemove={() => onRemove('accessory', acc.instanceId)}
-            style={{ top: -10, left: '50%', transform: 'translateX(-50%)' }}
-          />
+          <SceneRemoveButton onRemove={() => onRemove('accessory', acc.instanceId)} />
           <ProductImage
             src={acc.image}
             alt={acc.name}
@@ -83,10 +67,7 @@ export function DeskLayer({ desk, monitors, lamps, keyboards, mice, onRemove }) 
                 className="group-item scene-drop relative"
                 style={{ animationDelay: `${i * 60}ms` }}
               >
-                <RemoveButton
-                  onRemove={() => onRemove('accessory', acc.instanceId)}
-                  style={{ top: -10, left: '50%', transform: 'translateX(-50%)' }}
-                />
+                <SceneRemoveButton onRemove={() => onRemove('accessory', acc.instanceId)} />
                 <ProductImage
                   src={acc.image}
                   alt={acc.name}
@@ -101,10 +82,7 @@ export function DeskLayer({ desk, monitors, lamps, keyboards, mice, onRemove }) 
                 className="group-item scene-drop relative"
                 style={{ animationDelay: `${(keyboards.length + i) * 60}ms` }}
               >
-                <RemoveButton
-                  onRemove={() => onRemove('accessory', acc.instanceId)}
-                  style={{ top: -10, left: '50%', transform: 'translateX(-50%)' }}
-                />
+                <SceneRemoveButton onRemove={() => onRemove('accessory', acc.instanceId)} />
                 <ProductImage
                   src={acc.image}
                   alt={acc.name}

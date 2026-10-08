@@ -1,5 +1,5 @@
 import { ProductImage } from './ProductImage.jsx';
-import { RemoveButton } from './RemoveButton.jsx';
+import { SceneRemoveButton } from './scene/SceneRemoveButton.jsx';
 
 /**
  * Chair sits on the canvas floor, overlapping the desk base (z-10).
@@ -15,7 +15,7 @@ export function ChairLayer({ chair, onRemove }) {
 
   return (
     <div
-      className="chair-layer group-item absolute bottom-0 left-1/2 z-10 flex flex-col items-center"
+      className="chair-layer group-item absolute bottom-4 sm:bottom-6 left-1/2 z-10 flex flex-col items-center"
       style={{
         width: `${pct}%`,
         maxWidth,
@@ -23,11 +23,10 @@ export function ChairLayer({ chair, onRemove }) {
         transform: `translateX(calc(-50% + ${offset}px))`,
       }}
     >
-      <RemoveButton
-        size={16}
+      <SceneRemoveButton
         label={`Remove ${chair.name}`}
         onRemove={() => onRemove('chair')}
-        style={{ top: -10, left: '50%', transform: 'translateX(-50%)' }}
+        size={16}
       />
       <ProductImage
         src={chair.image}

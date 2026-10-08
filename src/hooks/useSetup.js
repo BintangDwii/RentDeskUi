@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
-import { MAX_MONITORS, SINGLETON_ACCESSORY_IDS, SINGLETON_ACCESSORY_SLOTS } from '../data/catalog.js';
+import { MAX_MONITORS } from '../data/catalog.js';
+import { isSingletonProduct } from '../utils/setup.js';
 
 const EMPTY_SETUP = { desk: null, chair: null, monitors: [], accessories: [] };
 const STORAGE_KEY = 'rentdesk-setup-v1';
@@ -47,10 +48,7 @@ export function useSetup() {
       } else if (product.type === 'monitor' && next.monitors.length < MAX_MONITORS) {
         next.monitors = [...next.monitors, { ...product, instanceId: Date.now() }];
       } else if (product.type === 'accessory') {
-        if (
-          SINGLETON_ACCESSORY_IDS.includes(product.id) ||
-          (product.slot && SINGLETON_ACCESSORY_SLOTS.includes(product.slot))
-        ) {
+        if (isSingletonProduct(product)) {
           const filterKey = product.slot ? 'slot' : 'id';
           next.accessories = [
             ...next.accessories.filter((a) => a[filterKey] !== product[filterKey]),

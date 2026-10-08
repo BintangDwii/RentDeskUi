@@ -6,7 +6,7 @@ export function ActionBar({ total, onCheckout }) {
   const animatedTotal = Math.round(useAnimatedNumber(total));
 
   return (
-    <div className="glass-card p-4 sm:p-5 sm:px-7 flex flex-col gap-4">
+    <div className="glass-card p-4 sm:p-5 sm:px-7 hidden sm:flex sm:flex-col gap-4">
       <div className="flex items-center justify-between gap-4 flex-wrap">
         <div className="min-w-0">
           <h2 className="text-xl font-bold text-primary mb-1 tracking-tight">Ready to Rent?</h2>

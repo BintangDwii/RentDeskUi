@@ -25,6 +25,13 @@ button:focus:not(:focus-visible) {
   outline: none;
 }
 
+/* Kill the 300ms double-tap delay / accidental double-tap zoom on touch */
+button,
+a,
+[role='button'] {
+  touch-action: manipulation;
+}
+
 /* ── Portfolio minimal primitives ── */
 .hover-lift {
   transition:
@@ -33,9 +40,11 @@ button:focus:not(:focus-visible) {
     background 0.2s;
 }
 
-.hover-lift:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+@media (hover: hover) {
+  .hover-lift:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+  }
 }
 
 .btn-primary {
@@ -182,8 +191,13 @@ button:focus:not(:focus-visible) {
 
 .product-card:hover {
   border-color: var(--color-primary);
-  transform: translateY(-6px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+}
+
+@media (hover: hover) {
+  .product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+  }
 }
 
 .tab-btn {
@@ -281,10 +295,25 @@ button:focus:not(:focus-visible) {
   opacity: 1;
 }
 
-/* Touch devices have no hover — always show remove controls */
+/* Touch devices have no hover — always show remove controls at a 40px target */
 @media (hover: none) {
   .remove-btn {
     opacity: 1;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+  }
+
+  /* Neutralise transform-based hover states that would otherwise
+     latch onto the element after a tap */
+  .product-card:hover,
+  .hover-lift:hover,
+  .btn-primary:hover:not(:disabled),
+  .btn-outline:hover:not(:disabled),
+  .add-btn:hover:not(:disabled),
+  .arrow-circle:hover {
+    transform: none;
   }
 }
 
@@ -619,4 +648,43 @@ button:focus:not(:focus-visible) {
 
 .no-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+/* Safe-area helpers (with non-env() fallbacks for older webviews) */
+.pt-safe {
+  padding-top: 2rem;
+  padding-top: calc(2rem + env(safe-area-inset-top, 0px));
+}
+
+.pb-safe {
+  padding-bottom: 0.75rem;
+  padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+}
+
+/* ── Mobile bottom-sheet modals (≤640px) ────────────────────────────
+   On phones the shared modal becomes a full-width sheet anchored to the
+   bottom, so long checkout/detail content gets the full viewport height.
+   `!important` is required to beat the Tailwind `!max-w-*` on the dialog. */
+@media (max-width: 640px) {
+  .modal-overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .modal-box {
+    width: 100%;
+    max-width: 100% !important;
+    max-height: 92dvh !important;
+    border-radius: 24px 24px 0 0 !important;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* iOS Safari zooms the page when a form control smaller than 16px is
+     focused — force 16px inside the sheet so the layout never jumps. */
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
 }

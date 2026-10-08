@@ -8,11 +8,11 @@ export function CatalogPanel({ activeTab, onTabChange, setup, onAdd, onDetail })
   return (
     <div
       id="catalog-panel"
-      className="catalog-panel glass-card !rounded-[6px] w-full lg:w-[400px] shrink-0 flex flex-col h-auto max-h-none lg:h-[720px] lg:max-h-none lg:sticky lg:top-4 overflow-hidden"
+      className="catalog-panel glass-card !rounded-[6px] w-full lg:w-[400px] shrink-0 flex flex-col h-auto max-h-none lg:h-[720px] lg:max-h-none lg:sticky lg:top-4 overflow-visible lg:overflow-hidden"
     >
       {/* Tabs */}
       <div
-        className="flex border-b border-border overflow-x-auto no-scrollbar snap-x"
+        className="flex border-b border-border overflow-x-auto no-scrollbar snap-x sticky top-0 z-20 bg-white rounded-t-[6px] lg:static"
         role="tablist"
         aria-label="Catalog categories"
       >

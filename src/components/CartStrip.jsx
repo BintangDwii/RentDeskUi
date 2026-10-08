@@ -28,14 +28,14 @@ function CartCard({ group, onRemoveOne }) {
   const first = group.instances[0];
 
   return (
-    <div className="pop-in relative w-[132px] shrink-0 bg-white border border-border rounded-[20px] p-2.5 pt-[14px] flex flex-col items-center text-center hover:border-primary hover-lift">
+    <div className="pop-in relative snap-start w-[132px] shrink-0 bg-white border border-border rounded-[20px] p-2.5 pt-[14px] flex flex-col items-center text-center hover:border-primary hover-lift">
       <button
         type="button"
         aria-label={`Remove ${group.name}`}
         onClick={() => onRemoveOne(first.type, first.instanceId)}
-        className="absolute top-1.5 right-1.5 w-8 h-8 flex items-center justify-center rounded-full bg-soft text-secondary hover:bg-red-100 hover:text-red-600 transition-colors"
+        className="absolute top-1.5 right-1.5 w-11 h-11 flex items-center justify-center rounded-full bg-soft text-secondary hover:bg-red-100 hover:text-red-600 transition-colors"
       >
-        <X size={13} />
+        <X size={15} />
       </button>
       <div className="w-full aspect-square flex items-center justify-center bg-soft rounded-[14px] border border-border p-1.5 mb-2 overflow-hidden">
         <ProductImage src={group.image} alt={group.name} className="w-full h-full drop-shadow-md" />
@@ -89,7 +89,7 @@ export function CartStrip({ setup, total, onRemove, onClear }) {
           </button>
         </div>
       </div>
-      <div className="flex gap-2.5 overflow-x-auto pb-1 pt-3">
+      <div className="flex gap-2.5 overflow-x-auto snap-x snap-mandatory pb-1 pt-3">
         {groups.map((g) => (
           <CartCard key={g.id} group={g} onRemoveOne={onRemove} />
         ))}

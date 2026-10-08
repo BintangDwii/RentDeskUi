@@ -73,6 +73,11 @@ src/
 - **Rules**: max `MAX_MONITORS` monitors; keyboard/mouse are singletons
   (re-adding replaces). Constants live in `data/catalog.js`.
 - Assets use absolute `/assets/...` paths from `public/`.
+- **Mobile UX**: `components/MobileCheckoutBar.jsx` keeps the rent CTA fixed to
+  the bottom on phones (`ActionBar` card takes over at `sm+`). Catalog tabs stick
+  to the top on mobile. Modals become full-width bottom sheets ≤640px
+  (`styles/App.css`). Touch targets are ≥40px, `touch-action: manipulation` and
+  `env(safe-area-inset-*)` (with fallbacks) keep iOS/Android gestures sane.
 
 Approach & Tech Choices:
 

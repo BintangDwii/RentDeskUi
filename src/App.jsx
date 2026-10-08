@@ -7,6 +7,7 @@ import { CartStrip } from './components/CartStrip.jsx';
 import { CatalogPanel } from './components/CatalogPanel.jsx';
 import { CheckoutModal } from './components/CheckoutModal.jsx';
 import { Header } from './components/Header.jsx';
+import { MobileCheckoutBar } from './components/MobileCheckoutBar.jsx';
 import { ProductDetailModal } from './components/ProductDetailModal.jsx';
 import { Scene } from './components/Scene.jsx';
 import { Toast } from './components/Toast.jsx';
@@ -49,7 +50,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-primary px-4 xl:px-6 py-8 flex flex-col items-center">
+    <div className="min-h-dvh bg-white text-primary px-4 xl:px-6 pt-safe pb-28 sm:pb-8 flex flex-col items-center">
       <div className="page-enter w-full max-w-[1400px] flex flex-col items-center">
         <Header />
       </div>
@@ -78,6 +79,8 @@ export default function App() {
           <ActionBar total={total} onCheckout={() => setIsCheckingOut(true)} />
         </div>
       </div>
+
+      <MobileCheckoutBar total={total} onCheckout={() => setIsCheckingOut(true)} />
 
       <ProductDetailModal
         product={detailProduct}

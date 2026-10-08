@@ -38,7 +38,7 @@ export function CheckoutModal({ setup, total, placedOrder, onClose, onConfirm, o
         <OrderSuccess order={placedOrder} onClose={onClose} />
       ) : (
         <>
-          <div className="flex items-center gap-3 mb-6">
+          <div className="sticky top-0 z-10 bg-white flex items-center gap-3 pt-1 pb-3 mb-4">
             <div className="arrow-circle !w-11 !h-11">
               <ShoppingCart size={20} />
             </div>
@@ -66,7 +66,7 @@ export function CheckoutModal({ setup, total, placedOrder, onClose, onConfirm, o
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-3 sticky bottom-0 bg-white pt-3 pb-1 border-t border-border">
+          <div className="flex flex-col sm:flex-row gap-3 sticky bottom-0 z-10 bg-white pt-3 pb-1 border-t border-border">
             <button type="button" className="modal-action-btn btn-outline w-full" onClick={onClose}>
               Keep Editing
             </button>

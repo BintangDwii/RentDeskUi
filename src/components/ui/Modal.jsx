@@ -33,7 +33,7 @@ export function Modal({
             type="button"
             aria-label={closeLabel}
             onClick={onClose}
-            className="arrow-circle absolute top-4 right-4 !w-10 !h-10 !bg-white !text-secondary border border-border hover:!bg-soft hover:!text-primary"
+            className="arrow-circle absolute top-4 right-4 !w-11 !h-11 !bg-white !text-secondary border border-border hover:!bg-soft hover:!text-primary max-sm:!fixed max-sm:!top-3 max-sm:!right-3 max-sm:!z-30"
           >
             <X size={15} />
           </button>

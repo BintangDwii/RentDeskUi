@@ -17,6 +17,9 @@ export const MAX_MONITORS = 2;
 /** Accessories that only make sense once — re-adding replaces the old one. */
 export const SINGLETON_ACCESSORY_IDS = ['acc-keyboard', 'acc-mouse'];
 
+/** Accessory slots limited to one item — re-adding swaps the occupying model. */
+export const SINGLETON_ACCESSORY_SLOTS = ['lamp', 'keyboard', 'mouse'];
+
 /** Rental duration plans with loyalty discount on the monthly rate. */
 export const RENTAL_PLANS = [
   { months: 1, label: '1 month', discount: 0 },

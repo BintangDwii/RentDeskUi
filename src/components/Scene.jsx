@@ -30,7 +30,7 @@ export function Scene({ setup, total, lamps, keyboards, mice, isEmpty, onRemove,
         {!isEmpty && <div className="canvas-floor" aria-hidden="true" />}
 
         {/* Scene wrapper — centers everything horizontally */}
-        <div className="relative w-full max-w-[580px] h-full">
+        <div className="relative w-full max-w-[680px] h-full">
           {setup.desk && (
             <DeskLayer
               desk={setup.desk}

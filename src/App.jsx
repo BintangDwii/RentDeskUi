@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CATEGORIES, MAX_MONITORS, SINGLETON_ACCESSORY_IDS } from './data/catalog.js';
+import { CATEGORIES, MAX_MONITORS, SINGLETON_ACCESSORY_IDS, SINGLETON_ACCESSORY_SLOTS } from './data/catalog.js';
 import { useSetup } from './hooks/useSetup.js';
 import { ActionBar } from './components/ActionBar.jsx';
 import { CartStrip } from './components/CartStrip.jsx';
@@ -13,7 +13,8 @@ import { Toast } from './components/Toast.jsx';
 function isSingletonProduct(product) {
   if (!product) return false;
   if (product.type === 'desk' || product.type === 'chair') return true;
-  return SINGLETON_ACCESSORY_IDS.includes(product.id);
+  if (SINGLETON_ACCESSORY_IDS.includes(product.id)) return true;
+  return Boolean(product.slot && SINGLETON_ACCESSORY_SLOTS.includes(product.slot));
 }
 
 export default function App() {
@@ -63,6 +64,12 @@ export default function App() {
       replaced = setup.desk.name;
     if (product.type === 'chair' && setup.chair && setup.chair.id !== product.id)
       replaced = setup.chair.name;
+    if (product.type === 'accessory' && product.slot) {
+      const occupant = setup.accessories.find(
+        (a) => a.slot === product.slot && a.id !== product.id
+      );
+      if (occupant) replaced = occupant.name;
+    }
 
     addToSetup(product);
     setToast({
@@ -111,12 +118,12 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-primary px-4 py-8 flex flex-col items-center">
-      <div className="page-enter w-full max-w-[1100px] flex flex-col items-center">
+    <div className="min-h-screen bg-white text-primary px-4 xl:px-6 py-8 flex flex-col items-center">
+      <div className="page-enter w-full max-w-[1400px] flex flex-col items-center">
         <Header />
       </div>
 
-      <div className="page-enter-delay flex flex-col lg:flex-row gap-6 w-full max-w-[1100px] items-start">
+      <div className="page-enter-delay flex flex-col lg:flex-row gap-6 xl:gap-8 w-full max-w-[1400px] items-start">
         <CatalogPanel
           activeTab={activeTab}
           onTabChange={setActiveTab}

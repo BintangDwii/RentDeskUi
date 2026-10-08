@@ -28,7 +28,7 @@ function CartCard({ group, onRemoveOne }) {
   const first = group.instances[0];
 
   return (
-    <div className="pop-in relative w-[132px] shrink-0 bg-white border border-border rounded-[20px] p-2.5 flex flex-col items-center text-center hover:border-primary hover-lift">
+    <div className="pop-in relative w-[132px] shrink-0 bg-white border border-border rounded-[20px] p-2.5 pt-[14px] flex flex-col items-center text-center hover:border-primary hover-lift">
       <button
         type="button"
         aria-label={`Remove ${group.name}`}
@@ -85,7 +85,7 @@ export function CartStrip({ setup, total, onRemove, onClear }) {
           </button>
         </div>
       </div>
-      <div className="flex gap-2.5 overflow-x-auto pb-1">
+      <div className="flex gap-2.5 overflow-x-auto pb-1 pt-3">
         {groups.map((g) => (
           <CartCard key={g.id} group={g} onRemoveOne={onRemove} />
         ))}

@@ -36,7 +36,7 @@ export function CatalogPanel({ activeTab, onTabChange, setup, onAdd, onDetail })
   return (
     <div
       id="catalog-panel"
-      className="catalog-panel glass-card !rounded-[6px] w-full lg:w-[300px] shrink-0 flex flex-col h-[640px] max-h-[320px] lg:max-h-none lg:sticky lg:top-4 overflow-hidden"
+      className="catalog-panel glass-card !rounded-[6px] w-full lg:w-[400px] shrink-0 flex flex-col h-[720px] max-h-[320px] lg:max-h-none lg:sticky lg:top-4 overflow-hidden"
     >
       {/* Tabs */}
       <div className="flex border-b border-border" role="tablist" aria-label="Catalog categories">
@@ -73,8 +73,8 @@ export function CatalogPanel({ activeTab, onTabChange, setup, onAdd, onDetail })
       </div>
 
       {/* Grid */}
-      <div className="flex-1 overflow-y-auto p-3.5">
-        <div key={activeTab} className="grid grid-cols-2 gap-2.5">
+      <div className="flex-1 overflow-y-auto p-4">
+        <div key={activeTab} className="grid grid-cols-2 gap-3">
           {PRODUCTS.filter((p) => p.category === activeTab).map((product, i) => (
             <ProductCard
               key={product.id}

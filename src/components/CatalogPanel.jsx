@@ -8,11 +8,11 @@ export function CatalogPanel({ activeTab, onTabChange, setup, onAdd, onDetail })
   return (
     <div
       id="catalog-panel"
-      className="catalog-panel glass-card !rounded-[6px] w-full lg:w-[400px] shrink-0 flex flex-col h-auto max-h-none lg:h-[720px] lg:max-h-none lg:sticky lg:top-4 overflow-visible lg:overflow-hidden"
+      className="catalog-panel glass-card !rounded-[6px] w-full lg:w-[400px] shrink-0 flex flex-col max-h-[70vh] lg:max-h-none lg:h-[720px] lg:sticky lg:top-4 overflow-hidden"
     >
       {/* Tabs */}
       <div
-        className="flex border-b border-border overflow-x-auto no-scrollbar snap-x sticky top-0 z-20 bg-white rounded-t-[6px] lg:static"
+        className="flex shrink-0 border-b border-border overflow-x-auto no-scrollbar snap-x bg-white rounded-t-[6px]"
         role="tablist"
         aria-label="Catalog categories"
       >
@@ -35,11 +35,10 @@ export function CatalogPanel({ activeTab, onTabChange, setup, onAdd, onDetail })
               {count > 0 && (
                 <span
                   aria-hidden="true"
-                  className={`text-[10px] font-medium px-2 py-0.5 rounded-full tabular-nums border ${
-                    active
+                  className={`text-[10px] font-medium px-2 py-0.5 rounded-full tabular-nums border ${active
                       ? 'bg-primary text-white border-primary'
                       : 'bg-tertiary text-secondary border-border'
-                  }`}
+                    }`}
                 >
                   {count}
                 </span>
@@ -50,7 +49,7 @@ export function CatalogPanel({ activeTab, onTabChange, setup, onAdd, onDetail })
       </div>
 
       {/* Grid */}
-      <div className="flex-1 lg:overflow-y-auto p-3 sm:p-4">
+      <div className="flex-1 min-h-0 overflow-y-auto p-3 mt-2 sm:p-4">
         <div key={activeTab} className="grid grid-cols-2 gap-2.5 sm:gap-3">
           {PRODUCTS.filter((p) => p.category === activeTab).map((product, i) => (
             <ProductCard

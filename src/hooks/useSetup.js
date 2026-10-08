@@ -60,12 +60,9 @@ export function useSetup() {
   }, [setup]);
 
   /** Derived selectors — keeps Scene components dumb. */
-  const lamps = useMemo(() => setup.accessories.filter((a) => a.id === 'acc-lamp'), [setup]);
-  const keyboards = useMemo(
-    () => setup.accessories.filter((a) => a.id === 'acc-keyboard'),
-    [setup]
-  );
-  const mice = useMemo(() => setup.accessories.filter((a) => a.id === 'acc-mouse'), [setup]);
+  const lamps = useMemo(() => setup.accessories.filter((a) => a.slot === 'lamp'), [setup]);
+  const keyboards = useMemo(() => setup.accessories.filter((a) => a.slot === 'keyboard'), [setup]);
+  const mice = useMemo(() => setup.accessories.filter((a) => a.slot === 'mouse'), [setup]);
   const isEmpty =
     !setup.desk && !setup.chair && setup.monitors.length === 0 && setup.accessories.length === 0;
 

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { CATEGORIES } from './data/catalog.js';
 import { useSetup } from './hooks/useSetup.js';
 import { ActionBar } from './components/ActionBar.jsx';
+import { CartStrip } from './components/CartStrip.jsx';
 import { CatalogPanel } from './components/CatalogPanel.jsx';
 import { CheckoutModal } from './components/CheckoutModal.jsx';
 import { Header } from './components/Header.jsx';
@@ -43,6 +44,7 @@ export default function App() {
         />
 
         <div className="canvas-panel w-full lg:flex-1 flex flex-col gap-4">
+          <CartStrip setup={setup} total={total} onRemove={removeFromSetup} />
           <Scene
             setup={setup}
             total={total}

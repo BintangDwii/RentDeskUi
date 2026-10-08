@@ -1,14 +1,19 @@
 import { ProductImage } from './ProductImage.jsx';
 import { RemoveButton } from './RemoveButton.jsx';
 
-/** Chair sits on the canvas floor, overlapping the desk base (z-10). */
+/**
+ * Chair sits on the canvas floor, overlapping the desk base (z-10).
+ * Sizing comes from `chair.scene` data ({ width, offset }) so new
+ * chairs never need code changes here.
+ */
 export function ChairLayer({ chair, onRemove }) {
-  const isTallMesh = chair.id === 'chair-2';
+  const width = chair.scene?.width ?? 190;
+  const offset = chair.scene?.offset ?? 0;
 
   return (
     <div
       className="group-item absolute bottom-0 left-1/2 z-10 flex flex-col items-center"
-      style={{ transform: isTallMesh ? 'translateX(calc(-50% - 10px))' : 'translateX(-50%)' }}
+      style={{ transform: `translateX(calc(-50% + ${offset}px))` }}
     >
       <RemoveButton
         size={16}
@@ -19,7 +24,7 @@ export function ChairLayer({ chair, onRemove }) {
         src={chair.image}
         alt={chair.name}
         style={{
-          width: chair.id === 'chair-1' ? 300 : 190,
+          width,
           filter: 'drop-shadow(0 16px 32px rgba(0,0,0,0.8))',
         }}
       />

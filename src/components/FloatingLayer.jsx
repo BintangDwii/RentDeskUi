@@ -2,10 +2,10 @@ import { getMonitorWidth } from '../utils/layout.js';
 import { ProductImage } from './ProductImage.jsx';
 import { RemoveButton } from './RemoveButton.jsx';
 
-function accessoryStyle(id) {
-  if (id === 'acc-lamp') return { height: 70 };
-  if (id === 'acc-keyboard') return { width: 100 };
-  if (id === 'acc-mouse') return { width: 36 };
+function accessoryStyle(accessory) {
+  if (accessory.slot === 'lamp') return { height: 70 };
+  if (accessory.slot === 'keyboard') return { width: 100 };
+  if (accessory.slot === 'mouse') return { width: 36 };
   return { width: 48 };
 }
 
@@ -38,7 +38,7 @@ export function FloatingLayer({ monitors, accessories, onRemove }) {
           <ProductImage
             src={acc.image}
             alt={acc.name}
-            style={{ ...accessoryStyle(acc.id), filter: 'drop-shadow(0 6px 14px rgba(0,0,0,0.6))' }}
+            style={{ ...accessoryStyle(acc), filter: 'drop-shadow(0 6px 14px rgba(0,0,0,0.6))' }}
           />
         </div>
       ))}

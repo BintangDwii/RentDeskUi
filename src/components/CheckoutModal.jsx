@@ -38,7 +38,7 @@ export function CheckoutModal({ setup, total, placedOrder, onClose, onConfirm, o
         <OrderSuccess order={placedOrder} onClose={onClose} />
       ) : (
         <>
-          <div className="sticky top-0 z-10 bg-white flex items-center gap-3 pt-1 pb-3 mb-4">
+          <div className="flex items-center gap-3 mb-6">
             <div className="arrow-circle !w-11 !h-11">
               <ShoppingCart size={20} />
             </div>

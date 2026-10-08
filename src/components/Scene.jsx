@@ -2,6 +2,7 @@ import { ChairLayer } from './ChairLayer.jsx';
 import { DeskLayer } from './DeskLayer.jsx';
 import { EmptyState } from './EmptyState.jsx';
 import { FloatingLayer } from './FloatingLayer.jsx';
+import { useAnimatedNumber } from '../hooks/useAnimatedNumber.js';
 
 /**
  * Visual canvas: total pill + scene (desk/chair/floating layers).
@@ -9,6 +10,7 @@ import { FloatingLayer } from './FloatingLayer.jsx';
  */
 export function Scene({ setup, total, lamps, keyboards, mice, isEmpty, onRemove, onBrowse }) {
   const showFloating = !setup.desk && (setup.monitors.length > 0 || setup.accessories.length > 0);
+  const animatedTotal = Math.round(useAnimatedNumber(total));
 
   return (
     <div className="glass-card p-5 relative !shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
@@ -16,7 +18,7 @@ export function Scene({ setup, total, lamps, keyboards, mice, isEmpty, onRemove,
       <div className="absolute top-4 right-4 z-10 total-pill !bg-white/85 !backdrop-blur-md !shadow-lg">
         <span className="text-xs text-gray-600 font-medium">Monthly</span>
         <span className="text-xl font-extrabold text-gray-900 tabular-nums" aria-live="polite">
-          ${total}
+          ${animatedTotal}
         </span>
       </div>
 

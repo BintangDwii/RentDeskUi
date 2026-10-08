@@ -1,10 +1,20 @@
 import { Check, Info, Plus } from 'lucide-react';
 import { ProductImage } from './ProductImage.jsx';
 
-export function ProductCard({ product, onAdd, onDetail, isAdded = false, qty = 0, disabled = false, disabledReason = '' }) {
+export function ProductCard({
+  product,
+  index = 0,
+  onAdd,
+  onDetail,
+  isAdded = false,
+  qty = 0,
+  disabled = false,
+  disabledReason = '',
+}) {
   return (
     <div
-      className={`product-card group ${isAdded ? '!border-gray-900 !shadow-[0_6px_20px_rgba(0,0,0,0.1)]' : ''} ${disabled ? 'opacity-75' : ''}`}
+      className={`product-card card-enter group ${isAdded ? '!border-gray-900 !shadow-[0_6px_20px_rgba(0,0,0,0.1)]' : ''} ${disabled ? 'opacity-75' : ''}`}
+      style={{ animationDelay: `${(index % 6) * 40}ms` }}
       onClick={() => onDetail(product)}
       role="button"
       tabIndex={0}
@@ -28,7 +38,7 @@ export function ProductCard({ product, onAdd, onDetail, isAdded = false, qty = 0
           </span>
         )}
         {isAdded && (
-          <span className="absolute bottom-1.5 left-1.5 inline-flex items-center gap-1 text-[9px] font-bold tracking-[0.06em] uppercase bg-emerald-600 text-white px-2 py-0.5 rounded-[6px]">
+          <span className="pop-in absolute bottom-1.5 left-1.5 inline-flex items-center gap-1 text-[9px] font-bold tracking-[0.06em] uppercase bg-emerald-600 text-white px-2 py-0.5 rounded-[6px]">
             <Check size={10} /> {qty > 1 ? `×${qty}` : 'Added'}
           </span>
         )}
@@ -44,9 +54,21 @@ export function ProductCard({ product, onAdd, onDetail, isAdded = false, qty = 0
       <button
         type="button"
         disabled={disabled}
-        title={disabled ? disabledReason : isAdded ? 'In your setup — click to view' : `Add ${product.name}`}
-        aria-label={disabled ? `${product.name} — ${disabledReason}` : isAdded ? `${product.name} in setup — add again` : `Add ${product.name} to setup`}
-        className={`add-btn w-full justify-center ${isAdded && !disabled ? '!bg-white !text-gray-900 hover:!bg-gray-100' : ''} disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-900 disabled:hover:border-gray-900`}
+        title={
+          disabled
+            ? disabledReason
+            : isAdded
+              ? 'In your setup — click to view'
+              : `Add ${product.name}`
+        }
+        aria-label={
+          disabled
+            ? `${product.name} — ${disabledReason}`
+            : isAdded
+              ? `${product.name} in setup — add again`
+              : `Add ${product.name} to setup`
+        }
+        className={`add-btn w-full justify-center active:scale-95 ${isAdded && !disabled ? '!bg-white !text-gray-900 hover:!bg-gray-100' : ''} disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-900 disabled:hover:border-gray-900`}
         onClick={(e) => {
           e.stopPropagation();
           if (!disabled) onAdd(product);

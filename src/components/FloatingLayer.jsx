@@ -13,8 +13,12 @@ function accessoryStyle(accessory) {
 export function FloatingLayer({ monitors, accessories, onRemove }) {
   return (
     <div className="absolute bottom-[140px] left-1/2 -translate-x-1/2 flex items-end justify-center gap-3.5 flex-wrap z-[5]">
-      {monitors.map((m) => (
-        <div key={m.instanceId} className="group-item relative">
+      {monitors.map((m, i) => (
+        <div
+          key={m.instanceId}
+          className="group-item scene-drop relative"
+          style={{ animationDelay: `${i * 60}ms` }}
+        >
           <RemoveButton
             onRemove={() => onRemove('monitor', m.instanceId)}
             style={{ top: -10, left: '50%', transform: 'translateX(-50%)' }}
@@ -29,8 +33,12 @@ export function FloatingLayer({ monitors, accessories, onRemove }) {
           />
         </div>
       ))}
-      {accessories.map((acc) => (
-        <div key={acc.instanceId} className="group-item relative">
+      {accessories.map((acc, i) => (
+        <div
+          key={acc.instanceId}
+          className="group-item scene-drop relative"
+          style={{ animationDelay: `${(monitors.length + i) * 60}ms` }}
+        >
           <RemoveButton
             onRemove={() => onRemove('accessory', acc.instanceId)}
             style={{ top: -10, left: '50%', transform: 'translateX(-50%)' }}

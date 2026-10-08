@@ -94,7 +94,9 @@ export default function App() {
 
   const handleBrowse = () => {
     setActiveTab(CATEGORIES.DESKS);
-    document.getElementById('catalog-panel')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    document
+      .getElementById('catalog-panel')
+      ?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   };
 
   const confirmOrder = (order) => {
@@ -110,9 +112,11 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#f8f9fb] text-gray-900 px-4 py-8 flex flex-col items-center">
-      <Header />
+      <div className="page-enter w-full max-w-[1100px] flex flex-col items-center">
+        <Header />
+      </div>
 
-      <div className="flex flex-col lg:flex-row gap-6 w-full max-w-[1100px] items-start">
+      <div className="page-enter-delay flex flex-col lg:flex-row gap-6 w-full max-w-[1100px] items-start">
         <CatalogPanel
           activeTab={activeTab}
           onTabChange={setActiveTab}
@@ -133,12 +137,7 @@ export default function App() {
             onRemove={handleRemove}
             onBrowse={handleBrowse}
           />
-          <ActionBar
-            setup={setup}
-            total={total}
-            onCheckout={() => setIsCheckingOut(true)}
-            onRemove={handleRemove}
-          />
+          <ActionBar total={total} onCheckout={() => setIsCheckingOut(true)} />
         </div>
       </div>
 

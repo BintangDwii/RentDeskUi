@@ -145,7 +145,7 @@ export function ProductDetailModal({ product, isAdded, isSingleton, onAdd, onClo
               </div>
               <button
                 type="button"
-                className="modal-action-btn !flex-none px-6 bg-gray-900 text-white shadow-[0_4px_14px_rgba(0,0,0,0.2)] hover:bg-gray-700 inline-flex items-center justify-center gap-1.5"
+                className="modal-action-btn !flex-none px-6 bg-gray-900 text-white shadow-[0_4px_14px_rgba(0,0,0,0.2)] hover:bg-gray-700 active:scale-95 inline-flex items-center justify-center gap-1.5"
                 onClick={() => {
                   if (isAdded && isSingleton) {
                     onClose();
@@ -155,7 +155,15 @@ export function ProductDetailModal({ product, isAdded, isSingleton, onAdd, onClo
                   onClose();
                 }}
               >
-                {isAdded ? isSingleton ? <ShoppingCart size={15} /> : <Plus size={15} /> : <Plus size={15} />}
+                {isAdded ? (
+                  isSingleton ? (
+                    <ShoppingCart size={15} />
+                  ) : (
+                    <Plus size={15} />
+                  )
+                ) : (
+                  <Plus size={15} />
+                )}
                 {ctaLabel}
               </button>
             </div>

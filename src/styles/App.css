@@ -260,9 +260,56 @@ button:focus:not(:focus-visible) {
   }
 }
 
+/* Scene item entrance — staggered drop-in when items land on canvas */
+.scene-drop {
+  animation: scene-drop-in 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes scene-drop-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.97);
+  }
+}
+
+/* Catalog card entrance — replayed per tab via key={activeTab} */
+.card-enter {
+  animation: card-enter-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes card-enter-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+/* Small pop for badges / chips appearing (Added check, cart cards) */
+.pop-in {
+  animation: pop-in 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+/* Page load entrance */
+.page-enter {
+  animation: page-fade-up 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.page-enter-delay {
+  animation: page-fade-up 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
+}
+@keyframes page-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
 /* Toast entrance */
 .toast-enter {
-  animation: toast-slide-up 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: toast-slide-up 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 @keyframes toast-slide-up {
   from {
@@ -276,6 +323,11 @@ button:focus:not(:focus-visible) {
   .modal-pop,
   .cart-enter,
   .toast-enter,
+  .scene-drop,
+  .card-enter,
+  .pop-in,
+  .page-enter,
+  .page-enter-delay,
   .product-card,
   .product-card:hover {
     animation: none;

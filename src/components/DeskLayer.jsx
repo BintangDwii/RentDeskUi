@@ -9,7 +9,7 @@ import { RemoveButton } from './RemoveButton.jsx';
  */
 export function DeskLayer({ desk, monitors, lamps, keyboards, mice, onRemove }) {
   return (
-    <div className="group-item absolute bottom-[60px] left-1/2 -translate-x-1/2 w-[88%] max-w-[440px] z-[5]">
+    <div className="group-item scene-drop absolute bottom-[60px] left-1/2 -translate-x-1/2 w-[88%] max-w-[440px] z-[5]">
       <RemoveButton
         size={16}
         label={`Remove ${desk.name}`}
@@ -27,8 +27,12 @@ export function DeskLayer({ desk, monitors, lamps, keyboards, mice, onRemove }) 
       {/* Monitors — back row, above desk surface */}
       {monitors.length > 0 && (
         <div className="absolute bottom-[86%] left-1/2 -translate-x-1/2 flex items-end justify-center gap-3 z-[6]">
-          {monitors.map((m) => (
-            <div key={m.instanceId} className="group-item relative flex flex-col items-center">
+          {monitors.map((m, i) => (
+            <div
+              key={m.instanceId}
+              className="group-item scene-drop relative flex flex-col items-center"
+              style={{ animationDelay: `${i * 60}ms` }}
+            >
               <RemoveButton
                 onRemove={() => onRemove('monitor', m.instanceId)}
                 style={{ top: -10, left: '50%', transform: 'translateX(-50%)' }}
@@ -47,10 +51,11 @@ export function DeskLayer({ desk, monitors, lamps, keyboards, mice, onRemove }) 
       )}
 
       {/* Lamp — right side of desk surface */}
-      {lamps.map((acc) => (
+      {lamps.map((acc, i) => (
         <div
           key={acc.instanceId}
-          className="group-item absolute bottom-[76%] right-[8%] z-[7] flex flex-col items-center"
+          className="group-item scene-drop absolute bottom-[76%] right-[8%] z-[7] flex flex-col items-center"
+          style={{ animationDelay: `${i * 60}ms` }}
         >
           <RemoveButton
             onRemove={() => onRemove('accessory', acc.instanceId)}
@@ -68,8 +73,12 @@ export function DeskLayer({ desk, monitors, lamps, keyboards, mice, onRemove }) 
       {(keyboards.length > 0 || mice.length > 0) && (
         <div className="absolute bottom-[70%] left-1/2 flex items-center justify-center gap-3.5 z-[7]">
           <div className="flex items-center justify-center gap-3.5 -translate-x-[44%]">
-            {keyboards.map((acc) => (
-              <div key={acc.instanceId} className="group-item relative">
+            {keyboards.map((acc, i) => (
+              <div
+                key={acc.instanceId}
+                className="group-item scene-drop relative"
+                style={{ animationDelay: `${i * 60}ms` }}
+              >
                 <RemoveButton
                   onRemove={() => onRemove('accessory', acc.instanceId)}
                   style={{ top: -10, left: '50%', transform: 'translateX(-50%)' }}
@@ -81,8 +90,12 @@ export function DeskLayer({ desk, monitors, lamps, keyboards, mice, onRemove }) 
                 />
               </div>
             ))}
-            {mice.map((acc) => (
-              <div key={acc.instanceId} className="group-item relative">
+            {mice.map((acc, i) => (
+              <div
+                key={acc.instanceId}
+                className="group-item scene-drop relative"
+                style={{ animationDelay: `${(keyboards.length + i) * 60}ms` }}
+              >
                 <RemoveButton
                   onRemove={() => onRemove('accessory', acc.instanceId)}
                   style={{ top: -10, left: '50%', transform: 'translateX(-50%)' }}

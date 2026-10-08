@@ -24,6 +24,7 @@ export function ChairLayer({ chair, onRemove }) {
       <ProductImage
         src={chair.image}
         alt={chair.name}
+        className="scene-drop"
         style={{
           width,
           filter: 'drop-shadow(0 16px 32px rgba(0,0,0,0.8))',

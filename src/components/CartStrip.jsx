@@ -1,4 +1,5 @@
 import { ShoppingCart, X } from 'lucide-react';
+import { useAnimatedNumber } from '../hooks/useAnimatedNumber.js';
 import { ProductImage } from './ProductImage.jsx';
 
 /**
@@ -27,7 +28,7 @@ function CartCard({ group, onRemoveOne }) {
   const first = group.instances[0];
 
   return (
-    <div className="relative w-[132px] shrink-0 bg-white border border-gray-200 rounded-[6px] p-2.5 flex flex-col items-center text-center hover:border-gray-900 hover:shadow-md transition-all">
+    <div className="pop-in relative w-[132px] shrink-0 bg-white border border-gray-200 rounded-[6px] p-2.5 flex flex-col items-center text-center hover:border-gray-900 hover:shadow-md transition-all">
       <button
         type="button"
         aria-label={`Remove ${group.name}`}
@@ -56,6 +57,7 @@ function CartCard({ group, onRemoveOne }) {
  */
 export function CartStrip({ setup, total, onRemove, onClear }) {
   const groups = summarize(setup);
+  const animatedTotal = Math.round(useAnimatedNumber(total));
   if (groups.length === 0) return null;
 
   const itemCount = groups.reduce((n, g) => n + g.instances.length, 0);
@@ -73,7 +75,9 @@ export function CartStrip({ setup, total, onRemove, onClear }) {
         <div className="flex items-center gap-3">
           <p className="text-[13px] text-gray-500">
             Total{' '}
-            <span className="text-base font-extrabold text-gray-900 tabular-nums">${total}</span>
+            <span className="text-base font-extrabold text-gray-900 tabular-nums">
+              ${animatedTotal}
+            </span>
             <span className="text-[11px]">/mo</span>
           </p>
           <button

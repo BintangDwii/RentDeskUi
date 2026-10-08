@@ -10,6 +10,7 @@ import {
   X,
 } from 'lucide-react';
 import { DELIVERY, RENTAL_PLANS } from '../data/catalog.js';
+import { useAnimatedNumber } from '../hooks/useAnimatedNumber.js';
 import {
   contractTotal,
   depositAmount,
@@ -140,6 +141,9 @@ export function CheckoutModal({ setup, total, placedOrder, onClose, onConfirm, o
   const monthly = discountedMonthly(total, plan);
   const contract = contractTotal(total, plan);
   const deposit = depositAmount(total, plan);
+  const animatedMonthly = Math.round(useAnimatedNumber(monthly) * 100) / 100;
+  const animatedContract = Math.round(useAnimatedNumber(contract) * 100) / 100;
+  const animatedDeposit = Math.round(useAnimatedNumber(deposit) * 100) / 100;
 
   return (
     <div className="modal-overlay modal-fade" onClick={onClose}>
@@ -162,8 +166,12 @@ export function CheckoutModal({ setup, total, placedOrder, onClose, onConfirm, o
               Your {placedOrder.months}-month rental
               {placedOrder.contract ? (
                 <>
-                  {' '}— <span className="font-bold text-gray-900 tabular-nums">${placedOrder.contract}</span> total
-                  (<span className="tabular-nums">${placedOrder.monthly}/mo</span>)
+                  {' '}
+                  —{' '}
+                  <span className="font-bold text-gray-900 tabular-nums">
+                    ${placedOrder.contract}
+                  </span>{' '}
+                  total (<span className="tabular-nums">${placedOrder.monthly}/mo</span>)
                 </>
               ) : null}{' '}
               is confirmed for this demo. We&apos;ll deliver &amp; assemble anywhere in Bali within
@@ -182,146 +190,158 @@ export function CheckoutModal({ setup, total, placedOrder, onClose, onConfirm, o
           </div>
         ) : (
           <>
-        {/* Header */}
-        <div className="flex items-center gap-3 mb-6">
-          <div className="w-11 h-11 rounded-[6px] bg-gradient-to-br from-gray-800 to-gray-950 flex items-center justify-center shadow-md shrink-0">
-            <ShoppingCart size={22} color="white" />
-          </div>
-          <div>
-            <h3 className="text-2xl font-bold text-gray-900 tracking-tight">Review your rental</h3>
-            <p className="text-[13px] text-gray-500">Items, duration &amp; price breakdown</p>
-          </div>
-        </div>
-
-        {/* Body: setup (left) + rental details (right) */}
-        <div className="grid gap-8 md:grid-cols-[1fr_1.1fr] mb-6">
-          {/* LEFT — Items by category */}
-          <div className="min-w-0">
-            <SectionTitle>Your setup</SectionTitle>
-            <div className="bg-neutral-50 rounded-[6px] p-4 border border-gray-200 flex flex-col gap-3.5 md:max-h-[600px] md:overflow-y-auto">
-              {groups.map((g) => (
-                <div key={g.title}>
-                  <p className="text-[11px] font-bold tracking-[0.08em] uppercase text-gray-400 mb-1.5">
-                    {g.title}
-                  </p>
-                  <ul className="list-none flex flex-col">
-                    {g.rows.map((r) => (
-                      <ItemRow key={r.key} {...r} />
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* RIGHT — Duration, breakdown, delivery */}
-          <div className="min-w-0 flex flex-col">
-            {/* Duration */}
-            <div className="mb-5">
-              <SectionTitle>Rental duration</SectionTitle>
-              <div className="grid grid-cols-2 xl:grid-cols-4 gap-2">
-                {RENTAL_PLANS.map((p) => {
-                  const active = p.months === plan.months;
-                  return (
-                    <button
-                      key={p.months}
-                      type="button"
-                      onClick={() => setMonths(p.months)}
-                      className={`rounded-[6px] border px-2 py-3 text-center transition-all duration-200 ${
-                        active
-                          ? 'border-transparent bg-gradient-to-b from-gray-800 to-gray-950 text-white shadow-lg shadow-gray-900/20 scale-[1.02]'
-                          : 'border-gray-200 bg-white text-gray-700 hover:border-gray-900 hover:shadow-sm'
-                      }`}
-                    >
-                      <span className="block text-sm font-bold tabular-nums">{p.label}</span>
-                      {p.discount > 0 ? (
-                        <span
-                          className={`inline-block mt-1.5 text-[10px] font-bold px-2 py-0.5 rounded-[6px] ${
-                            active
-                              ? 'bg-emerald-400/20 text-emerald-300'
-                              : 'bg-emerald-50 text-emerald-700'
-                          }`}
-                        >
-                          Save {Math.round(p.discount * 100)}%
-                        </span>
-                      ) : (
-                        <span className="block text-[10px] font-semibold text-gray-400 mt-1.5">
-                          No commitment
-                        </span>
-                      )}
-                    </button>
-                  );
-                })}
+            {/* Header */}
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-11 h-11 rounded-[6px] bg-gradient-to-br from-gray-800 to-gray-950 flex items-center justify-center shadow-md shrink-0">
+                <ShoppingCart size={22} color="white" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-gray-900 tracking-tight">
+                  Review your rental
+                </h3>
+                <p className="text-[13px] text-gray-500">Items, duration &amp; price breakdown</p>
               </div>
             </div>
 
-            {/* 3 — Breakdown */}
-            <div className="mb-5">
-              <SectionTitle>Price breakdown</SectionTitle>
-              <ul className="list-none grid grid-cols-2 sm:grid-cols-3 gap-2 bg-neutral-50 border border-gray-200 rounded-[6px] p-2.5">
-                <BreakdownCell label="Subtotal" value={`$${total}/mo`} />
-                <BreakdownCell
-                  label={`Discount (${Math.round(plan.discount * 100)}%)`}
-                  value={plan.discount > 0 ? `−$${discountAmount(total, plan)}` : '—'}
-                  accent={plan.discount > 0}
-                />
-                <BreakdownCell label="Monthly rate" value={`$${monthly}/mo`} highlight />
-                <BreakdownCell label={`Contract (${plan.months} mo)`} value={`$${contract}`} />
-                <BreakdownCell label="Deposit (refund.)" value={`$${deposit}`} />
-                <BreakdownCell
-                  label="Delivery"
-                  value={DELIVERY.fee === 0 ? 'Free' : `$${DELIVERY.fee}`}
-                  accent
-                />
-              </ul>
+            {/* Body: setup (left) + rental details (right) */}
+            <div className="grid gap-8 md:grid-cols-[1fr_1.1fr] mb-6">
+              {/* LEFT — Items by category */}
+              <div className="min-w-0">
+                <SectionTitle>Your setup</SectionTitle>
+                <div className="bg-neutral-50 rounded-[6px] p-4 border border-gray-200 flex flex-col gap-3.5 md:max-h-[600px] md:overflow-y-auto">
+                  {groups.map((g) => (
+                    <div key={g.title}>
+                      <p className="text-[11px] font-bold tracking-[0.08em] uppercase text-gray-400 mb-1.5">
+                        {g.title}
+                      </p>
+                      <ul className="list-none flex flex-col">
+                        {g.rows.map((r) => (
+                          <ItemRow key={r.key} {...r} />
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* RIGHT — Duration, breakdown, delivery */}
+              <div className="min-w-0 flex flex-col">
+                {/* Duration */}
+                <div className="mb-5">
+                  <SectionTitle>Rental duration</SectionTitle>
+                  <div className="grid grid-cols-2 xl:grid-cols-4 gap-2">
+                    {RENTAL_PLANS.map((p) => {
+                      const active = p.months === plan.months;
+                      return (
+                        <button
+                          key={p.months}
+                          type="button"
+                          onClick={() => setMonths(p.months)}
+                          className={`rounded-[6px] border px-2 py-3 text-center transition-all duration-200 ${
+                            active
+                              ? 'border-transparent bg-gradient-to-b from-gray-800 to-gray-950 text-white shadow-lg shadow-gray-900/20 scale-[1.02]'
+                              : 'border-gray-200 bg-white text-gray-700 hover:border-gray-900 hover:shadow-sm'
+                          }`}
+                        >
+                          <span className="block text-sm font-bold tabular-nums">{p.label}</span>
+                          {p.discount > 0 ? (
+                            <span
+                              className={`inline-block mt-1.5 text-[10px] font-bold px-2 py-0.5 rounded-[6px] ${
+                                active
+                                  ? 'bg-emerald-400/20 text-emerald-300'
+                                  : 'bg-emerald-50 text-emerald-700'
+                              }`}
+                            >
+                              Save {Math.round(p.discount * 100)}%
+                            </span>
+                          ) : (
+                            <span className="block text-[10px] font-semibold text-gray-400 mt-1.5">
+                              No commitment
+                            </span>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* 3 — Breakdown */}
+                <div className="mb-5">
+                  <SectionTitle>Price breakdown</SectionTitle>
+                  <ul className="list-none grid grid-cols-2 sm:grid-cols-3 gap-2 bg-neutral-50 border border-gray-200 rounded-[6px] p-2.5">
+                    <BreakdownCell label="Subtotal" value={`$${total}/mo`} />
+                    <BreakdownCell
+                      label={`Discount (${Math.round(plan.discount * 100)}%)`}
+                      value={plan.discount > 0 ? `−$${discountAmount(total, plan)}` : '—'}
+                      accent={plan.discount > 0}
+                    />
+                    <BreakdownCell
+                      label="Monthly rate"
+                      value={`$${animatedMonthly}/mo`}
+                      highlight
+                    />
+                    <BreakdownCell
+                      label={`Contract (${plan.months} mo)`}
+                      value={`$${animatedContract}`}
+                    />
+                    <BreakdownCell label="Deposit (refund.)" value={`$${animatedDeposit}`} />
+                    <BreakdownCell
+                      label="Delivery"
+                      value={DELIVERY.fee === 0 ? 'Free' : `$${DELIVERY.fee}`}
+                      accent
+                    />
+                  </ul>
+                </div>
+
+                {/* 4 — Delivery */}
+                <div className="bg-gradient-to-br from-emerald-50/90 via-emerald-50/40 to-white border border-emerald-200/70 rounded-[6px] p-4">
+                  <SectionTitle>Delivery included</SectionTitle>
+                  <ul className="flex flex-col gap-2">
+                    {DELIVERY.includes.map((line, i) => {
+                      const Icon = DELIVERY_ICONS[i % DELIVERY_ICONS.length];
+                      return (
+                        <li
+                          key={line}
+                          className="flex items-center gap-2.5 text-[13px] text-gray-700"
+                        >
+                          <span className="w-6 h-6 shrink-0 rounded-[6px] bg-emerald-100 flex items-center justify-center">
+                            <Icon size={12} className="text-emerald-700" />
+                          </span>
+                          <span className="font-medium">{line}</span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-gray-400 mt-3 pt-2.5 border-t border-emerald-100">
+                    <span className="inline-flex items-center gap-1">
+                      <MapPin size={11} /> {DELIVERY.coverage}
+                    </span>
+                    <span className="inline-flex items-center gap-1">
+                      <Clock size={11} /> ETA {DELIVERY.eta} after confirmation
+                    </span>
+                  </p>
+                </div>
+              </div>
+              {/* /grid body */}
             </div>
 
-            {/* 4 — Delivery */}
-            <div className="bg-gradient-to-br from-emerald-50/90 via-emerald-50/40 to-white border border-emerald-200/70 rounded-[6px] p-4">
-              <SectionTitle>Delivery included</SectionTitle>
-              <ul className="flex flex-col gap-2">
-                {DELIVERY.includes.map((line, i) => {
-                  const Icon = DELIVERY_ICONS[i % DELIVERY_ICONS.length];
-                  return (
-                    <li key={line} className="flex items-center gap-2.5 text-[13px] text-gray-700">
-                      <span className="w-6 h-6 shrink-0 rounded-[6px] bg-emerald-100 flex items-center justify-center">
-                        <Icon size={12} className="text-emerald-700" />
-                      </span>
-                      <span className="font-medium">{line}</span>
-                    </li>
-                  );
-                })}
-              </ul>
-              <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-gray-400 mt-3 pt-2.5 border-t border-emerald-100">
-                <span className="inline-flex items-center gap-1">
-                  <MapPin size={11} /> {DELIVERY.coverage}
-                </span>
-                <span className="inline-flex items-center gap-1">
-                  <Clock size={11} /> ETA {DELIVERY.eta} after confirmation
-                </span>
-              </p>
+            {/* Actions */}
+            <div className="flex gap-3 sticky bottom-0 bg-white pt-3 pb-1 border-t border-gray-100">
+              <button
+                type="button"
+                className="modal-action-btn bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200"
+                onClick={onClose}
+              >
+                Keep Editing
+              </button>
+              <button
+                type="button"
+                className="modal-action-btn bg-gray-900 text-white shadow-[0_4px_14px_rgba(0,0,0,0.2)] hover:bg-gray-700 tabular-nums"
+                onClick={() => onConfirm({ contract, months: plan.months, monthly })}
+              >
+                Confirm — ${animatedContract}
+              </button>
             </div>
-          </div>
-          {/* /grid body */}
-        </div>
-
-        {/* Actions */}
-        <div className="flex gap-3 sticky bottom-0 bg-white pt-3 pb-1 border-t border-gray-100">
-          <button
-            type="button"
-            className="modal-action-btn bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200"
-            onClick={onClose}
-          >
-            Keep Editing
-          </button>
-          <button
-            type="button"
-            className="modal-action-btn bg-gray-900 text-white shadow-[0_4px_14px_rgba(0,0,0,0.2)] hover:bg-gray-700 tabular-nums"
-            onClick={() => onConfirm({ contract, months: plan.months, monthly })}
-          >
-            Confirm — ${contract}
-          </button>
-        </div>
           </>
         )}
       </div>

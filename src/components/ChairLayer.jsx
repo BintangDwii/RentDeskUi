@@ -3,13 +3,14 @@ import { RemoveButton } from './RemoveButton.jsx';
 
 /**
  * Chair sits on the canvas floor, overlapping the desk base (z-10).
- * Sizing comes from `chair.scene` data ({ pct, width, offset }) so new
+ * Sizing comes from `chair.scene` data ({ pct, width, min, offset }) so new
  * chairs never need code changes here. Width is fluid like the desk
- * (percent of the scene wrapper) capped at `width` px.
+ * (percent of the scene wrapper) capped at `width` px, floored at `min` px.
  */
 export function ChairLayer({ chair, onRemove }) {
   const maxWidth = chair.scene?.width ?? 300;
   const pct = chair.scene?.pct ?? 44;
+  const minWidth = chair.scene?.min ?? 130;
   const offset = chair.scene?.offset ?? 0;
 
   return (
@@ -18,6 +19,7 @@ export function ChairLayer({ chair, onRemove }) {
       style={{
         width: `${pct}%`,
         maxWidth,
+        minWidth,
         transform: `translateX(calc(-50% + ${offset}px))`,
       }}
     >

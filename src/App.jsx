@@ -23,6 +23,7 @@ export default function App() {
     lamps,
     keyboards,
     mice,
+    plants,
     isEmpty,
     add,
     remove,
@@ -72,6 +73,7 @@ export default function App() {
             lamps={lamps}
             keyboards={keyboards}
             mice={mice}
+            plants={plants}
             isEmpty={isEmpty}
             onRemove={remove}
             onBrowse={handleBrowse}

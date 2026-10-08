@@ -4,10 +4,11 @@ import { SceneRemoveButton } from './scene/SceneRemoveButton.jsx';
 
 /**
  * Desk is the scene anchor. Monitors float above the desk surface (back row),
- * the lamp sits on the right side, keyboard + mouse rest front-center.
+ * the lamp sits on the right side, keyboard + mouse rest front-center, and the
+ * plant (singleton) stands on the floor to the lower-right.
  * All offsets are relative to the desk image container.
  */
-export function DeskLayer({ desk, monitors, lamps, keyboards, mice, onRemove }) {
+export function DeskLayer({ desk, monitors, lamps, keyboards, mice, plants, onRemove }) {
   return (
     <div className="group-item scene-drop absolute bottom-[12%] left-1/2 -translate-x-1/2 w-[84%] max-w-[440px] z-[5]">
       <SceneRemoveButton
@@ -53,6 +54,22 @@ export function DeskLayer({ desk, monitors, lamps, keyboards, mice, onRemove }) 
             src={acc.image}
             alt={acc.name}
             style={{ height: 90, filter: 'drop-shadow(0 6px 16px rgba(0,0,0,0.7))' }}
+          />
+        </div>
+      ))}
+
+      {/* Plant — floor, lower-right beside the desk */}
+      {plants.map((acc, i) => (
+        <div
+          key={acc.instanceId}
+          className="group-item scene-drop absolute bottom-[8%] -right-[4%] z-[6] flex flex-col items-center"
+          style={{ animationDelay: `${i * 60}ms` }}
+        >
+          <SceneRemoveButton onRemove={() => onRemove('accessory', acc.instanceId)} />
+          <ProductImage
+            src={acc.image}
+            alt={acc.name}
+            style={{ height: 72, filter: 'drop-shadow(0 6px 16px rgba(0,0,0,0.7))' }}
           />
         </div>
       ))}

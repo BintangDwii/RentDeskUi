@@ -102,6 +102,7 @@ export function useSetup() {
   const lamps = useMemo(() => setup.accessories.filter((a) => a.slot === 'lamp'), [setup]);
   const keyboards = useMemo(() => setup.accessories.filter((a) => a.slot === 'keyboard'), [setup]);
   const mice = useMemo(() => setup.accessories.filter((a) => a.slot === 'mouse'), [setup]);
+  const plants = useMemo(() => setup.accessories.filter((a) => a.slot === 'plant'), [setup]);
   const isEmpty =
     !setup.desk && !setup.chair && setup.monitors.length === 0 && setup.accessories.length === 0;
 
@@ -115,6 +116,7 @@ export function useSetup() {
     lamps,
     keyboards,
     mice,
+    plants,
     isEmpty,
   };
 }

@@ -6,6 +6,7 @@ const FLOATING_MONITOR_SHADOW = 'drop-shadow(0 12px 24px rgba(0,0,0,0.7))';
 
 function accessoryStyle(accessory) {
   if (accessory.slot === 'lamp') return { height: 70 };
+  if (accessory.slot === 'plant') return { height: 72 };
   if (accessory.slot === 'keyboard') return { width: 100 };
   if (accessory.slot === 'mouse') return { width: 36 };
   return { width: 48 };

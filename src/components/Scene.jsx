@@ -8,7 +8,17 @@ import { useAnimatedNumber } from '../hooks/useAnimatedNumber.js';
  * Visual canvas: total pill + scene (desk/chair/floating layers).
  * Item summary lives in the ActionBar below — canvas stays clean.
  */
-export function Scene({ setup, total, lamps, keyboards, mice, isEmpty, onRemove, onBrowse }) {
+export function Scene({
+  setup,
+  total,
+  lamps,
+  keyboards,
+  mice,
+  plants,
+  isEmpty,
+  onRemove,
+  onBrowse,
+}) {
   const showFloating = !setup.desk && (setup.monitors.length > 0 || setup.accessories.length > 0);
   const animatedTotal = Math.round(useAnimatedNumber(total));
 
@@ -38,6 +48,7 @@ export function Scene({ setup, total, lamps, keyboards, mice, isEmpty, onRemove,
               lamps={lamps}
               keyboards={keyboards}
               mice={mice}
+              plants={plants}
               onRemove={onRemove}
             />
           )}

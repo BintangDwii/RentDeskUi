@@ -3,8 +3,10 @@ import {
   BatteryCharging,
   Bluetooth,
   Cable,
+  Droplets,
   Expand,
   Keyboard,
+  Leaf,
   Layers,
   LayoutGrid,
   Lock,
@@ -46,4 +48,6 @@ export const SPEC_ICONS = {
   mouse: Mouse,
   volume: VolumeX,
   activity: Activity,
+  leaf: Leaf,
+  droplets: Droplets,
 };

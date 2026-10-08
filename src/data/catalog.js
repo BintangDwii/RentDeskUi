@@ -18,7 +18,7 @@ export const MAX_MONITORS = 2;
 export const SINGLETON_ACCESSORY_IDS = ['acc-keyboard', 'acc-mouse'];
 
 /** Accessory slots limited to one item — re-adding swaps the occupying model. */
-export const SINGLETON_ACCESSORY_SLOTS = ['lamp', 'keyboard', 'mouse'];
+export const SINGLETON_ACCESSORY_SLOTS = ['lamp', 'keyboard', 'mouse', 'plant'];
 
 /** Rental duration plans with loyalty discount on the monthly rate. */
 export const RENTAL_PLANS = [
@@ -266,6 +266,48 @@ export const PRODUCTS = [
       { icon: 'sliders', label: 'Control', value: 'App + touch' },
       { icon: 'zap', label: 'Power', value: '10W USB-C' },
       { icon: 'rotate', label: 'Arm', value: 'Foldable slim bar' },
+    ],
+  },
+  {
+    id: 'acc-plant-1',
+    name: 'Monstera Deliciosa',
+    category: CATEGORIES.ACCESSORIES,
+    price: 8,
+    image: '/assets/plant-1.png',
+    type: 'accessory',
+    slot: 'plant',
+    badge: 'New',
+    rating: 4.8,
+    reviews: 42,
+    tagline: 'Statement split-leaf plant to green up your desk.',
+    description:
+      'A lush Monstera with glossy split leaves that instantly warms up any workspace. Comes potted in a matte ceramic planter, ready to style.',
+    specs: [
+      { icon: 'leaf', label: 'Type', value: 'Monstera' },
+      { icon: 'ruler', label: 'Height', value: '60 cm' },
+      { icon: 'sun', label: 'Light', value: 'Bright indirect' },
+      { icon: 'droplets', label: 'Water', value: 'Weekly' },
+    ],
+  },
+  {
+    id: 'acc-plant-2',
+    name: 'Snake Plant',
+    category: CATEGORIES.ACCESSORIES,
+    price: 6,
+    image: '/assets/plant-2.png',
+    type: 'accessory',
+    slot: 'plant',
+    badge: null,
+    rating: 4.7,
+    reviews: 58,
+    tagline: 'Low-maintenance air-purifying plant.',
+    description:
+      'Upright Sansevieria blades that thrive on neglect and clean the air. Tolerates low light and only needs watering every couple of weeks.',
+    specs: [
+      { icon: 'leaf', label: 'Type', value: 'Sansevieria' },
+      { icon: 'ruler', label: 'Height', value: '45 cm' },
+      { icon: 'sun', label: 'Light', value: 'Low to bright' },
+      { icon: 'droplets', label: 'Water', value: 'Every 2–3 weeks' },
     ],
   },
 ];

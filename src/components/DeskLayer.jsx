@@ -9,7 +9,7 @@ import { RemoveButton } from './RemoveButton.jsx';
  */
 export function DeskLayer({ desk, monitors, lamps, keyboards, mice, onRemove }) {
   return (
-    <div className="group-item scene-drop absolute bottom-[60px] left-1/2 -translate-x-1/2 w-[88%] max-w-[440px] z-[5]">
+    <div className="group-item scene-drop absolute bottom-[8%] left-1/2 -translate-x-1/2 w-[88%] max-w-[440px] z-[5]">
       <RemoveButton
         size={16}
         label={`Remove ${desk.name}`}
@@ -24,13 +24,15 @@ export function DeskLayer({ desk, monitors, lamps, keyboards, mice, onRemove }) 
         style={{ width: '100%', filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.7))' }}
       />
 
-      {/* Monitors — back row, above desk surface */}
+      {/* Monitors — back row, above desk surface. Nowrap + shrink so dual
+          monitors squeeze side-by-side on mobile instead of wrapping over
+          each other. Basis ratio 1 : 1.32 preserves ultrawide width. */}
       {monitors.length > 0 && (
-        <div className="absolute bottom-[86%] left-1/2 -translate-x-1/2 flex items-end justify-center gap-3 z-[6]">
+        <div className="monitor-row absolute bottom-[86%] left-1/2 -translate-x-1/2 flex w-full sm:w-[112%] max-w-none flex-nowrap items-end justify-center gap-0 z-[6]">
           {monitors.map((m, i) => (
             <div
               key={m.instanceId}
-              className="group-item scene-drop relative flex flex-col items-center"
+              className={`group-item scene-drop relative flex flex-col items-center ${m.id === 'acc-monitor-2' ? 'monitor-item-wide' : 'monitor-item'}`}
               style={{ animationDelay: `${i * 60}ms` }}
             >
               <RemoveButton
@@ -40,8 +42,9 @@ export function DeskLayer({ desk, monitors, lamps, keyboards, mice, onRemove }) 
               <ProductImage
                 src={m.image}
                 alt={m.name}
+                className="monitor-img"
                 style={{
-                  width: getMonitorWidth(m, monitors.length),
+                  '--mw': `${getMonitorWidth(m, monitors.length)}px`,
                   filter: 'drop-shadow(0 12px 28px rgba(0,0,0,0.8))',
                 }}
               />
@@ -71,7 +74,7 @@ export function DeskLayer({ desk, monitors, lamps, keyboards, mice, onRemove }) 
 
       {/* Keyboard + mouse — front-center of desk surface */}
       {(keyboards.length > 0 || mice.length > 0) && (
-        <div className="absolute bottom-[70%] left-1/2 flex items-center justify-center gap-3.5 z-[7]">
+        <div className="desk-accessories absolute bottom-[70%] left-1/2 flex items-center justify-center gap-3.5 z-[7]">
           <div className="flex items-center justify-center gap-3.5 -translate-x-[44%]">
             {keyboards.map((acc, i) => (
               <div
@@ -86,7 +89,8 @@ export function DeskLayer({ desk, monitors, lamps, keyboards, mice, onRemove }) 
                 <ProductImage
                   src={acc.image}
                   alt={acc.name}
-                  style={{ width: 105, filter: 'drop-shadow(0 4px 10px rgba(0,0,0,0.5))' }}
+                  className="keyboard-img"
+                  style={{ filter: 'drop-shadow(0 4px 10px rgba(0,0,0,0.5))' }}
                 />
               </div>
             ))}
@@ -103,7 +107,8 @@ export function DeskLayer({ desk, monitors, lamps, keyboards, mice, onRemove }) 
                 <ProductImage
                   src={acc.image}
                   alt={acc.name}
-                  style={{ width: 40, filter: 'drop-shadow(0 4px 10px rgba(0,0,0,0.5))' }}
+                  className="mouse-img"
+                  style={{ filter: 'drop-shadow(0 4px 10px rgba(0,0,0,0.5))' }}
                 />
               </div>
             ))}

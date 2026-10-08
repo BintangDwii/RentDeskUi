@@ -33,14 +33,14 @@ function CartCard({ group, onRemoveOne }) {
         type="button"
         aria-label={`Remove ${group.name}`}
         onClick={() => onRemoveOne(first.type, first.instanceId)}
-        className="absolute top-1.5 right-1.5 w-5 h-5 flex items-center justify-center rounded-full bg-soft text-secondary hover:bg-red-100 hover:text-red-600 transition-colors"
+        className="absolute top-1.5 right-1.5 w-8 h-8 flex items-center justify-center rounded-full bg-soft text-secondary hover:bg-red-100 hover:text-red-600 transition-colors"
       >
-        <X size={11} />
+        <X size={13} />
       </button>
       <div className="w-full aspect-square flex items-center justify-center bg-soft rounded-[14px] border border-border p-1.5 mb-2 overflow-hidden">
         <ProductImage src={group.image} alt={group.name} className="w-full h-full drop-shadow-md" />
       </div>
-      <p className="text-[11px] font-semibold text-primary leading-tight truncate w-full">
+      <p className="text-[11px] font-semibold text-primary leading-tight truncate w-full" title={group.name}>
         {group.name}
         {qty > 1 && <span className="text-secondary tabular-nums"> ×{qty}</span>}
       </p>
@@ -64,7 +64,7 @@ export function CartStrip({ setup, total, onRemove, onClear }) {
 
   return (
     <div className="glass-card cart-enter !rounded-[6px] p-4">
-      <div className="flex items-center justify-between mb-3 gap-2">
+      <div className="flex items-center justify-between flex-wrap gap-y-2 mb-3 gap-2">
         <p className="pill !py-1 !text-[11px] !font-medium uppercase tracking-[0.08em]">
           <ShoppingCart size={13} aria-hidden="true" />
           Your cart
@@ -80,7 +80,11 @@ export function CartStrip({ setup, total, onRemove, onClear }) {
             </span>
             <span className="text-[11px]">/mo</span>
           </p>
-          <button type="button" onClick={onClear} className="link-underline !text-[12px]">
+          <button
+            type="button"
+            onClick={onClear}
+            className="link-underline !text-[12px] px-2 py-2 -m-2"
+          >
             Clear all
           </button>
         </div>

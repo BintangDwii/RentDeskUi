@@ -42,11 +42,14 @@ export function ProductCard({
             <Check size={10} /> {qty > 1 ? `×${qty}` : 'Added'}
           </span>
         )}
-        <span className="absolute top-1.5 right-1.5 w-5 h-5 hidden group-hover:flex group-focus-within:flex items-center justify-center rounded-full bg-white shadow-md text-secondary">
+        <span className="absolute top-1.5 right-1.5 w-5 h-5 hidden group-hover:flex group-focus-within:flex max-sm:flex items-center justify-center rounded-full bg-white shadow-md text-secondary">
           <Info size={12} />
         </span>
       </div>
-      <p className="text-[14px] font-bold text-primary leading-tight w-full truncate">
+      <p
+        className="text-[14px] font-bold text-primary leading-tight w-full truncate"
+        title={product.name}
+      >
         {product.name}
       </p>
       <p className="flex items-center justify-start gap-1 mt-1 text-[11px] text-secondary tabular-nums w-full">
@@ -70,9 +73,9 @@ export function ProductCard({
           ))}
         </p>
       )}
-      <div className="mt-auto pt-3 w-full flex items-end justify-between gap-2 min-w-0">
+      <div className="mt-auto pt-3 w-full flex flex-col items-stretch gap-2 min-w-0 sm:flex-row sm:items-end sm:justify-between">
         <p className="shrink-0 leading-none tabular-nums">
-          <span className="block text-[20px] sm:text-[22px] font-extrabold text-primary tracking-tight">
+          <span className="block text-[20px] sm:text-[22px] font-semibold text-primary tracking-tight">
             ${product.price}
           </span>
           <span className="block text-[10px] font-medium text-secondary mt-0.5">/mo</span>
@@ -94,7 +97,7 @@ export function ProductCard({
                 ? `${product.name} in setup — add again`
                 : `Add ${product.name} to setup`
           }
-          className={`add-btn !w-auto shrink-0 !px-4 !py-2 !text-[12px] active:scale-95 ${isAdded && !disabled ? '!bg-transparent !text-primary' : ''} disabled:opacity-50 disabled:cursor-not-allowed`}
+          className={`add-btn w-full justify-center sm:!w-auto sm:justify-center shrink-0 !px-4 !py-2 !text-[12px] active:scale-95 ${isAdded && !disabled ? '!bg-transparent !text-primary' : ''} disabled:opacity-50 disabled:cursor-not-allowed`}
           onClick={(e) => {
             e.stopPropagation();
             if (!disabled) onAdd(product);

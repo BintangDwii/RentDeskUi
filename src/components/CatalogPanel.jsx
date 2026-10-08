@@ -36,10 +36,14 @@ export function CatalogPanel({ activeTab, onTabChange, setup, onAdd, onDetail })
   return (
     <div
       id="catalog-panel"
-      className="catalog-panel glass-card !rounded-[6px] w-full lg:w-[400px] shrink-0 flex flex-col h-[720px] max-h-[320px] lg:max-h-none lg:sticky lg:top-4 overflow-hidden"
+      className="catalog-panel glass-card !rounded-[6px] w-full lg:w-[400px] shrink-0 flex flex-col h-auto max-h-none lg:h-[720px] lg:max-h-none lg:sticky lg:top-4 overflow-hidden"
     >
       {/* Tabs */}
-      <div className="flex border-b border-border" role="tablist" aria-label="Catalog categories">
+      <div
+        className="flex border-b border-border overflow-x-auto no-scrollbar snap-x"
+        role="tablist"
+        aria-label="Catalog categories"
+      >
         {Object.values(CATEGORIES).map((cat) => {
           const Icon = CAT_ICONS[cat];
           const active = activeTab === cat;
@@ -51,10 +55,11 @@ export function CatalogPanel({ activeTab, onTabChange, setup, onAdd, onDetail })
               role="tab"
               aria-selected={active}
               aria-label={`${cat}, ${count} selected`}
-              className={`tab-btn ${active ? 'active' : ''}`}
+              className={`tab-btn flex-none min-w-0 snap-start ${active ? 'active' : ''}`}
               onClick={() => onTabChange(cat)}
             >
-              <Icon size={13} aria-hidden="true" /> {cat}
+              <Icon size={13} aria-hidden="true" />{' '}
+              <span className="truncate">{cat}</span>
               {count > 0 && (
                 <span
                   aria-hidden="true"
@@ -73,8 +78,8 @@ export function CatalogPanel({ activeTab, onTabChange, setup, onAdd, onDetail })
       </div>
 
       {/* Grid */}
-      <div className="flex-1 overflow-y-auto p-4">
-        <div key={activeTab} className="grid grid-cols-2 gap-3">
+      <div className="flex-1 lg:overflow-y-auto p-3 sm:p-4">
+        <div key={activeTab} className="grid grid-cols-2 gap-2.5 sm:gap-3">
           {PRODUCTS.filter((p) => p.category === activeTab).map((product, i) => (
             <ProductCard
               key={product.id}

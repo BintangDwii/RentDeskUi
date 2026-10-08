@@ -6,18 +6,18 @@ export function ActionBar({ total, onCheckout }) {
   const animatedTotal = Math.round(useAnimatedNumber(total));
 
   return (
-    <div className="glass-card p-5 px-7 flex flex-col gap-4">
+    <div className="glass-card p-4 sm:p-5 sm:px-7 flex flex-col gap-4">
       <div className="flex items-center justify-between gap-4 flex-wrap">
-        <div>
+        <div className="min-w-0">
           <h2 className="text-xl font-bold text-primary mb-1 tracking-tight">Ready to Rent?</h2>
-          <p className="text-[13px] text-secondary inline-flex items-center gap-1.5">
-            <Truck size={14} aria-hidden="true" />
-            Delivered &amp; assembled anywhere in Bali within 48h.
+          <p className="text-[13px] text-secondary flex items-center gap-1.5">
+            <Truck size={14} className="shrink-0" aria-hidden="true" />
+            <span>Delivered &amp; assembled anywhere in Bali within 48h.</span>
           </p>
         </div>
         <button
           type="button"
-          className="btn-primary"
+          className="btn-primary w-full justify-center sm:w-auto"
           disabled={empty}
           onClick={onCheckout}
         >

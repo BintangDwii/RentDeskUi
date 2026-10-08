@@ -123,7 +123,7 @@ export default function App() {
         <Header />
       </div>
 
-      <div className="page-enter-delay flex flex-col lg:flex-row gap-6 xl:gap-8 w-full max-w-[1400px] items-start">
+      <div className="page-enter-delay flex flex-col lg:flex-row gap-4 sm:gap-6 xl:gap-8 w-full max-w-[1400px] items-start">
         <CatalogPanel
           activeTab={activeTab}
           onTabChange={setActiveTab}

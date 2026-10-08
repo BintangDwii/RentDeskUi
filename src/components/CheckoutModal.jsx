@@ -38,7 +38,9 @@ function ItemRow({ image, name, price, onRemove }) {
         <span className="w-11 h-11 shrink-0 flex items-center justify-center bg-white border border-border rounded-[12px] p-1">
           <ProductImage src={image} alt="" className="w-full h-full" />
         </span>
-        <span className="truncate text-sm font-medium text-primary">{name}</span>
+        <span className="truncate text-sm font-medium text-primary" title={name}>
+          {name}
+        </span>
       </span>
       <span className="inline-flex items-center gap-2 shrink-0">
         <span className="text-primary font-semibold text-xs tabular-nums">${price}/mo</span>
@@ -46,7 +48,7 @@ function ItemRow({ image, name, price, onRemove }) {
           type="button"
           aria-label={`Remove ${name}`}
           onClick={onRemove}
-          className="w-7 h-7 flex items-center justify-center rounded-full bg-soft text-secondary hover:bg-red-100 hover:text-red-600 transition-colors"
+          className="w-8 h-8 flex items-center justify-center rounded-full bg-soft text-secondary hover:bg-red-100 hover:text-red-600 transition-colors"
         >
           <X size={13} />
         </button>
@@ -151,7 +153,7 @@ export function CheckoutModal({ setup, total, placedOrder, onClose, onConfirm, o
         role="dialog"
         aria-modal="true"
         aria-label="Review your rental"
-        className="modal-box modal-pop !max-w-5xl max-h-[88vh] overflow-y-auto !p-6 sm:!p-9"
+        className="modal-box modal-pop !max-w-5xl max-h-[88vh] overflow-y-auto !p-5 sm:!p-9 !rounded-[20px] sm:!rounded-[24px]"
         onClick={(e) => e.stopPropagation()}
       >
         {placedOrder ? (
@@ -268,7 +270,7 @@ export function CheckoutModal({ setup, total, placedOrder, onClose, onConfirm, o
                 {/* 3 — Breakdown */}
                 <div className="mb-5">
                   <SectionTitle>Price breakdown</SectionTitle>
-                  <ul className="list-none grid grid-cols-2 sm:grid-cols-3 gap-2 bg-tertiary border border-border rounded-[20px] p-2.5">
+                  <ul className="list-none grid grid-cols-1 min-[420px]:grid-cols-2 sm:grid-cols-3 gap-2 bg-tertiary border border-border rounded-[20px] p-2.5">
                     <BreakdownCell label="Subtotal" value={`$${total}/mo`} />
                     <BreakdownCell
                       label={`Discount (${Math.round(plan.discount * 100)}%)`}
@@ -326,17 +328,17 @@ export function CheckoutModal({ setup, total, placedOrder, onClose, onConfirm, o
             </div>
 
             {/* Actions */}
-            <div className="flex gap-3 sticky bottom-0 bg-white pt-3 pb-1 border-t border-border">
+            <div className="flex flex-col sm:flex-row gap-3 sticky bottom-0 bg-white pt-3 pb-1 border-t border-border">
               <button
                 type="button"
-                className="modal-action-btn btn-outline"
+                className="modal-action-btn btn-outline w-full"
                 onClick={onClose}
               >
                 Keep Editing
               </button>
               <button
                 type="button"
-                className="modal-action-btn btn-primary tabular-nums"
+                className="modal-action-btn btn-primary tabular-nums w-full"
                 onClick={() => onConfirm({ contract, months: plan.months, monthly })}
               >
                 Confirm — ${animatedContract} ↗

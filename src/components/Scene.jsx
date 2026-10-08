@@ -13,7 +13,7 @@ export function Scene({ setup, total, lamps, keyboards, mice, isEmpty, onRemove,
   const animatedTotal = Math.round(useAnimatedNumber(total));
 
   return (
-    <div className="glass-card !rounded-[6px] p-5 relative">
+    <div className="glass-card !rounded-[6px] p-4 sm:p-5 relative">
       {/* Total badge */}
       <div className="absolute top-4 right-4 z-10 total-pill">
         <span className="text-xs font-medium">Monthly</span>
@@ -23,7 +23,7 @@ export function Scene({ setup, total, lamps, keyboards, mice, isEmpty, onRemove,
       </div>
 
       {/* Visual stage */}
-      <div className="canvas-bg canvas-grid relative w-full h-[480px] max-h-[60vh] min-h-[380px] overflow-hidden flex items-end justify-center">
+      <div className="canvas-bg canvas-grid relative w-full aspect-[4/3] max-h-[480px] overflow-hidden flex items-end justify-center">
         {isEmpty && <EmptyState onBrowse={onBrowse} />}
 
         {/* Studio floor */}
@@ -55,7 +55,7 @@ export function Scene({ setup, total, lamps, keyboards, mice, isEmpty, onRemove,
 
         {/* Hint strip when desk missing but items floating */}
         {showFloating && (
-          <p className="pill absolute bottom-3 left-1/2 -translate-x-1/2 !text-[11px] whitespace-nowrap shadow-sm">
+          <p className="pill absolute bottom-3 left-1/2 -translate-x-1/2 !text-[11px] whitespace-normal text-center max-w-[90%] shadow-sm">
             Add a desk to anchor your setup
           </p>
         )}

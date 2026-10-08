@@ -5,9 +5,11 @@
 ::-webkit-scrollbar {
   width: 4px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.15);
   border-radius: 6px;
@@ -18,6 +20,7 @@
   outline: 2px solid #222222;
   outline-offset: 2px;
 }
+
 button:focus:not(:focus-visible) {
   outline: none;
 }
@@ -29,6 +32,7 @@ button:focus:not(:focus-visible) {
     box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
     background 0.2s;
 }
+
 .hover-lift:hover {
   transform: translateY(-6px);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
@@ -53,12 +57,14 @@ button:focus:not(:focus-visible) {
     transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
+
 .btn-primary:hover:not(:disabled) {
   background: #333;
   border-color: #333;
   transform: translateY(-2px);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
 }
+
 .btn-primary:disabled {
   opacity: 0.45;
   cursor: not-allowed;
@@ -85,6 +91,7 @@ button:focus:not(:focus-visible) {
     color 0.2s,
     transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
+
 .btn-outline:hover:not(:disabled) {
   background: var(--color-primary);
   color: #fff;
@@ -102,6 +109,7 @@ button:focus:not(:focus-visible) {
   cursor: pointer;
   transition: opacity 0.2s;
 }
+
 .link-underline:hover {
   opacity: 0.7;
 }
@@ -120,6 +128,7 @@ button:focus:not(:focus-visible) {
     border-color 0.2s,
     color 0.2s;
 }
+
 .pill:hover {
   border-color: var(--color-primary);
 }
@@ -140,6 +149,7 @@ button:focus:not(:focus-visible) {
     transform 0.2s;
   flex-shrink: 0;
 }
+
 .arrow-circle:hover {
   background: #333;
   transform: translateX(2px);
@@ -169,6 +179,7 @@ button:focus:not(:focus-visible) {
   position: relative;
   overflow: hidden;
 }
+
 .product-card:hover {
   border-color: var(--color-primary);
   transform: translateY(-6px);
@@ -192,11 +203,13 @@ button:focus:not(:focus-visible) {
   gap: 6px;
   letter-spacing: 0.02em;
 }
+
 .tab-btn.active {
   color: var(--color-primary);
   border-bottom-color: var(--color-primary);
   background: var(--color-tertiary);
 }
+
 .tab-btn:hover:not(.active) {
   color: var(--color-primary);
   background: var(--color-soft);
@@ -223,6 +236,7 @@ button:focus:not(:focus-visible) {
   letter-spacing: 0.02em;
   width: 100%;
 }
+
 .add-btn:hover:not(:disabled) {
   background: #333;
   border-color: #333;
@@ -234,8 +248,10 @@ button:focus:not(:focus-visible) {
   color: white;
   border: none;
   border-radius: 50%;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -248,19 +264,23 @@ button:focus:not(:focus-visible) {
   z-index: 20;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
+
 .remove-btn:hover {
   background: #dc2626;
   transform: scale(1.06);
 }
+
 .remove-btn:focus-visible {
   opacity: 1;
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
+
 .group-item:hover .remove-btn,
 .group-item:focus-within .remove-btn {
   opacity: 1;
 }
+
 /* Touch devices have no hover — always show remove controls */
 @media (hover: none) {
   .remove-btn {
@@ -279,16 +299,111 @@ button:focus:not(:focus-visible) {
   background-image: radial-gradient(circle, #e3e3e3 1px, transparent 1px);
   background-size: 22px 22px;
 }
+
 /* Studio floor shadow under desk/chair */
 .canvas-floor {
   position: absolute;
-  bottom: 28px;
+  bottom: 5%;
   left: 50%;
   transform: translateX(-50%);
   width: 72%;
   height: 26px;
   background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.16) 0%, transparent 70%);
   pointer-events: none;
+}
+
+/* Monitor row: scale down on mobile to prevent overflow into canvas edges */
+.monitor-row {
+  transform-origin: center bottom;
+  transform: scale(0.62);
+}
+
+@media (min-width: 640px) {
+  .monitor-row {
+    transform: scale(1);
+  }
+}
+
+/* Monitor row items: share space on mobile, shrink-wrap image on desktop.
+   Without this, flex-grow divs stay wider than the capped image and the
+   leftover centering looks like a gap between touching monitors. */
+.monitor-item {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.monitor-item-wide {
+  flex: 1.32 1 0;
+  min-width: 0;
+}
+
+@media (min-width: 640px) {
+
+  .monitor-item,
+  .monitor-item-wide {
+    flex: none;
+  }
+}
+
+/* Monitor image: fluid share on mobile, exact px on desktop.
+   Inline width can't be responsive, so the px lives in --mw. */
+.monitor-img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+@media (min-width: 640px) {
+  .monitor-img {
+    width: var(--mw);
+  }
+}
+
+/* Keyboard: smaller on mobile so it fits inside narrow desk */
+.keyboard-img {
+  width: 70px;
+  height: auto;
+}
+
+@media (min-width: 640px) {
+  .keyboard-img {
+    width: 105px;
+  }
+}
+
+/* Mouse: smaller on mobile */
+.mouse-img {
+  width: 26px;
+  height: auto;
+}
+
+@media (min-width: 640px) {
+  .mouse-img {
+    width: 40px;
+  }
+}
+
+/* Keyboard + mouse row: scale down on mobile */
+.desk-accessories {
+  transform-origin: center bottom;
+  transform: scale(0.75);
+}
+
+@media (min-width: 640px) {
+  .desk-accessories {
+    transform: scale(1);
+  }
+}
+
+/* Chair: cap max-width on mobile to prevent oversized rendering */
+.chair-layer {
+  max-width: 120px !important;
+}
+
+@media (min-width: 640px) {
+  .chair-layer {
+    max-width: none !important;
+  }
 }
 
 .total-pill {
@@ -315,6 +430,7 @@ button:focus:not(:focus-visible) {
   z-index: 100;
   padding: 1rem;
 }
+
 .modal-box {
   background: #ffffff;
   border: 1px solid var(--color-border);
@@ -324,6 +440,7 @@ button:focus:not(:focus-visible) {
   padding: 36px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
 }
+
 .modal-action-btn {
   flex: 1;
   padding: 12px 24px;
@@ -357,12 +474,14 @@ button:focus:not(:focus-visible) {
     transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
+
 .checkout-btn-light:hover:not(:disabled) {
   background: #333;
   border-color: #333;
   transform: translateY(-2px);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
 }
+
 .checkout-btn-light:disabled {
   opacity: 0.45;
   cursor: not-allowed;
@@ -374,14 +493,17 @@ button:focus:not(:focus-visible) {
 .modal-fade {
   animation: modal-fade-in 0.2s ease;
 }
+
 .modal-pop {
   animation: modal-pop-in 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
 @keyframes modal-fade-in {
   from {
     opacity: 0;
   }
 }
+
 @keyframes modal-pop-in {
   from {
     opacity: 0;
@@ -393,6 +515,7 @@ button:focus:not(:focus-visible) {
 .cart-enter {
   animation: cart-slide-in 0.32s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
 @keyframes cart-slide-in {
   from {
     opacity: 0;
@@ -404,6 +527,7 @@ button:focus:not(:focus-visible) {
 .scene-drop {
   animation: scene-drop-in 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
+
 @keyframes scene-drop-in {
   from {
     opacity: 0;
@@ -415,6 +539,7 @@ button:focus:not(:focus-visible) {
 .card-enter {
   animation: card-enter-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
+
 @keyframes card-enter-in {
   from {
     opacity: 0;
@@ -426,6 +551,7 @@ button:focus:not(:focus-visible) {
 .pop-in {
   animation: pop-in 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
+
 @keyframes pop-in {
   from {
     opacity: 0;
@@ -437,9 +563,11 @@ button:focus:not(:focus-visible) {
 .page-enter {
   animation: page-fade-up 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
+
 .page-enter-delay {
   animation: page-fade-up 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
 }
+
 @keyframes page-fade-up {
   from {
     opacity: 0;
@@ -451,6 +579,7 @@ button:focus:not(:focus-visible) {
 .toast-enter {
   animation: toast-slide-up 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
+
 @keyframes toast-slide-up {
   from {
     opacity: 0;
@@ -459,6 +588,7 @@ button:focus:not(:focus-visible) {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .modal-fade,
   .modal-pop,
   .cart-enter,
@@ -474,4 +604,37 @@ button:focus:not(:focus-visible) {
     transition: none;
     transform: none;
   }
+}
+
+/* ── Mobile essentials (≤640px): 44px targets, no sticky hover ── */
+@media (max-width: 640px) {
+
+  .btn-primary,
+  .btn-outline,
+  .add-btn,
+  .modal-action-btn,
+  .checkout-btn-light {
+    min-height: 44px;
+  }
+
+  .product-card:active {
+    transform: none;
+  }
+
+  .product-card,
+  .btn-primary,
+  .add-btn,
+  .tab-btn {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Scrollable tab rows without a rough scrollbar on touch */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }

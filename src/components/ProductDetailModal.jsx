@@ -69,7 +69,7 @@ function Rating({ value, reviews }) {
 }
 
 export function ProductDetailModal({ product, isAdded, isSingleton, onAdd, onClose }) {
-  useModalBehaviour(product ? onClose : null);
+  useModalBehaviour(onClose, Boolean(product));
   if (!product) return null;
 
   const ctaLabel = isAdded ? (isSingleton ? 'In your setup' : 'Add another') : 'Add to setup';
@@ -80,12 +80,12 @@ export function ProductDetailModal({ product, isAdded, isSingleton, onAdd, onClo
         role="dialog"
         aria-modal="true"
         aria-label={`${product.name} details`}
-        className="modal-box modal-pop relative !max-w-5xl max-h-[90vh] overflow-y-auto !p-0 overflow-hidden"
+        className="modal-box modal-pop relative !max-w-5xl max-h-[90vh] overflow-y-auto overflow-x-hidden !p-0"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="grid lg:grid-cols-[1.05fr_1fr]">
           {/* Image side */}
-          <div className="relative bg-soft border-b lg:border-b-0 lg:border-r border-border p-10 lg:p-12 flex items-center justify-center min-h-[320px] lg:min-h-[480px]">
+          <div className="relative bg-soft border-b lg:border-b-0 lg:border-r border-border p-6 min-h-[220px] sm:p-10 lg:p-12 sm:min-h-[320px] lg:min-h-[480px] flex items-center justify-center">
             {product.badge && (
               <span className="absolute top-5 left-5 text-[10px] font-medium tracking-[0.08em] uppercase bg-primary text-white px-2.5 py-1 rounded-full">
                 {product.badge}
@@ -94,16 +94,16 @@ export function ProductDetailModal({ product, isAdded, isSingleton, onAdd, onClo
             <ProductImage
               src={product.image}
               alt={product.name}
-              className="w-full max-h-80 lg:max-h-[420px] drop-shadow-xl"
+              className="w-full max-h-56 sm:max-h-80 lg:max-h-[420px] drop-shadow-xl"
             />
           </div>
 
           {/* Info side */}
-          <div className="p-8 lg:p-10 flex flex-col">
+          <div className="p-6 sm:p-8 lg:p-10 flex flex-col">
             <p className="text-[11px] font-medium tracking-[0.1em] uppercase text-secondary mb-1">
               {product.category}
             </p>
-            <h3 className="text-3xl font-bold text-primary tracking-tight leading-tight">
+            <h3 className="text-2xl sm:text-3xl font-bold text-primary tracking-tight leading-tight">
               {product.name}
             </h3>
             <div className="mt-2 mb-4">
@@ -163,16 +163,16 @@ export function ProductDetailModal({ product, isAdded, isSingleton, onAdd, onClo
               </span>
             </div>
 
-            <div className="mt-5 pt-5 border-t border-border flex items-center justify-between gap-3">
+            <div className="mt-5 pt-5 border-t border-border flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div>
-                <span className="text-3xl font-bold text-primary tabular-nums">
+                <span className="text-2xl sm:text-3xl font-bold text-primary tabular-nums">
                   ${product.price}
                 </span>
                 <span className="text-xs text-secondary">/mo</span>
               </div>
               <button
                 type="button"
-                className="modal-action-btn !flex-none btn-primary !px-8 !py-3"
+                className="modal-action-btn sm:!flex-none btn-primary !px-8 !py-3 w-full justify-center sm:w-auto"
                 onClick={() => {
                   if (isAdded && isSingleton) {
                     onClose();

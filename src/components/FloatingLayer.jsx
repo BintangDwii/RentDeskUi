@@ -33,6 +33,7 @@ export function FloatingLayer({ monitors, accessories, onRemove }) {
         <div
           key={acc.instanceId}
           className="group-item scene-drop relative"
+          tabIndex={0}
           style={{ animationDelay: `${(monitors.length + i) * 60}ms` }}
         >
           <SceneRemoveButton onRemove={() => onRemove('accessory', acc.instanceId)} />

@@ -17,6 +17,7 @@ export function MonitorItem({
   return (
     <div
       className={`group-item scene-drop relative ${wide ? 'monitor-item-wide' : 'monitor-item'} ${className}`}
+      tabIndex={0}
       style={{ animationDelay: `${index * 60}ms` }}
     >
       <SceneRemoveButton onRemove={() => onRemove('monitor', monitor.instanceId)} />

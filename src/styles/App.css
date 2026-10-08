@@ -271,6 +271,7 @@ a,
   justify-content: center;
   cursor: pointer;
   opacity: 0;
+  pointer-events: none;
   transition:
     opacity 0.2s,
     transform 0.2s,
@@ -286,23 +287,25 @@ a,
 
 .remove-btn:focus-visible {
   opacity: 1;
+  pointer-events: auto;
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
 .group-item:hover .remove-btn,
-.group-item:focus-within .remove-btn {
+.group-item:focus-within .remove-btn,
+.group-item:active .remove-btn {
   opacity: 1;
+  pointer-events: auto;
 }
 
-/* Touch devices have no hover — always show remove controls at a 40px target */
+/* Touch devices: slightly larger 36px tap target, still hidden until item is clicked/focused */
 @media (hover: none) {
   .remove-btn {
-    opacity: 1;
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
-    min-height: 40px;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
   }
 
   /* Neutralise transform-based hover states that would otherwise

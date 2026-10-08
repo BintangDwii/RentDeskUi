@@ -16,6 +16,7 @@ export function ChairLayer({ chair, onRemove }) {
   return (
     <div
       className="chair-layer group-item absolute bottom-4 sm:bottom-6 left-1/2 z-10 flex flex-col items-center"
+      tabIndex={0}
       style={{
         width: `${pct}%`,
         maxWidth,

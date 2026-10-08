@@ -10,7 +10,7 @@ import { SceneRemoveButton } from './scene/SceneRemoveButton.jsx';
  */
 export function DeskLayer({ desk, monitors, lamps, keyboards, mice, plants, onRemove }) {
   return (
-    <div className="group-item scene-drop absolute bottom-[12%] left-1/2 -translate-x-1/2 w-[84%] max-w-[440px] z-[5]">
+    <div className="group-item scene-drop absolute bottom-[12%] left-1/2 -translate-x-1/2 w-[84%] max-w-[440px] z-[5]" tabIndex={0}>
       <SceneRemoveButton
         onRemove={() => onRemove('desk')}
         label={`Remove ${desk.name}`}
@@ -47,6 +47,7 @@ export function DeskLayer({ desk, monitors, lamps, keyboards, mice, plants, onRe
         <div
           key={acc.instanceId}
           className="group-item scene-drop absolute bottom-[76%] right-[8%] z-[7] flex flex-col items-center"
+          tabIndex={0}
           style={{ animationDelay: `${i * 60}ms` }}
         >
           <SceneRemoveButton onRemove={() => onRemove('accessory', acc.instanceId)} />
@@ -63,6 +64,7 @@ export function DeskLayer({ desk, monitors, lamps, keyboards, mice, plants, onRe
         <div
           key={acc.instanceId}
           className="group-item scene-drop absolute bottom-[8%] -right-[4%] z-[6] flex flex-col items-center"
+          tabIndex={0}
           style={{ animationDelay: `${i * 60}ms` }}
         >
           <SceneRemoveButton onRemove={() => onRemove('accessory', acc.instanceId)} />
@@ -82,6 +84,7 @@ export function DeskLayer({ desk, monitors, lamps, keyboards, mice, plants, onRe
               <div
                 key={acc.instanceId}
                 className="group-item scene-drop relative"
+                tabIndex={0}
                 style={{ animationDelay: `${i * 60}ms` }}
               >
                 <SceneRemoveButton onRemove={() => onRemove('accessory', acc.instanceId)} />
@@ -97,6 +100,7 @@ export function DeskLayer({ desk, monitors, lamps, keyboards, mice, plants, onRe
               <div
                 key={acc.instanceId}
                 className="group-item scene-drop relative"
+                tabIndex={0}
                 style={{ animationDelay: `${(keyboards.length + i) * 60}ms` }}
               >
                 <SceneRemoveButton onRemove={() => onRemove('accessory', acc.instanceId)} />

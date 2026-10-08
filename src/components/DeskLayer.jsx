@@ -1,4 +1,4 @@
-import { getMonitorWidth } from '../utils/layout.js';
+import { getMonitorWidth, getMonitorWidthMobile } from '../utils/layout.js';
 import { ProductImage } from './ProductImage.jsx';
 import { RemoveButton } from './RemoveButton.jsx';
 
@@ -45,6 +45,7 @@ export function DeskLayer({ desk, monitors, lamps, keyboards, mice, onRemove }) 
                 className="monitor-img"
                 style={{
                   '--mw': `${getMonitorWidth(m)}px`,
+                  '--mw-mobile': `${getMonitorWidthMobile(m)}px`,
                   filter: 'drop-shadow(0 12px 28px rgba(0,0,0,0.8))',
                 }}
               />

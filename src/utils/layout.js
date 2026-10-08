@@ -8,3 +8,7 @@
 export function getMonitorWidth(monitor) {
   return monitor.id === 'acc-monitor-2' ? 172 : 130;
 }
+
+export function getMonitorWidthMobile(monitor) {
+  return monitor.id === 'acc-monitor-2' ? 132 : 100;
+}

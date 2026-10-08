@@ -312,43 +312,25 @@ button:focus:not(:focus-visible) {
   pointer-events: none;
 }
 
-/* Monitor row: scale down on mobile to prevent overflow into canvas edges */
+/* Monitor row: centered above desk surface */
 .monitor-row {
   transform-origin: center bottom;
-  transform: scale(0.62);
 }
 
-@media (min-width: 640px) {
-  .monitor-row {
-    transform: scale(1);
-  }
-}
-
-/* Monitor row items: share space on mobile, shrink-wrap image on desktop.
-   Without this, flex-grow divs stay wider than the capped image and the
-   leftover centering looks like a gap between touching monitors. */
+/* Monitor row items: flex shrink-wrap container */
 .monitor-item {
-  flex: 1 1 0;
+  flex: none;
   min-width: 0;
 }
 
 .monitor-item-wide {
-  flex: 1.32 1 0;
+  flex: none;
   min-width: 0;
 }
 
-@media (min-width: 640px) {
-
-  .monitor-item,
-  .monitor-item-wide {
-    flex: none;
-  }
-}
-
-/* Monitor image: fluid share on mobile, exact px on desktop.
-   Inline width can't be responsive, so the px lives in --mw. */
+/* Monitor image: capped at --mw-mobile (100px / 132px) on mobile, --mw (130px / 172px) on desktop */
 .monitor-img {
-  width: 100%;
+  width: var(--mw-mobile, 100px);
   max-width: 100%;
   height: auto;
 }

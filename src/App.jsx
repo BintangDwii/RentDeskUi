@@ -111,7 +111,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8f9fb] text-gray-900 px-4 py-8 flex flex-col items-center">
+    <div className="min-h-screen bg-white text-primary px-4 py-8 flex flex-col items-center">
       <div className="page-enter w-full max-w-[1100px] flex flex-col items-center">
         <Header />
       </div>

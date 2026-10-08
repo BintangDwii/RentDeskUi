@@ -1,4 +1,4 @@
-import { Check, Info, Plus } from 'lucide-react';
+import { Check, Info, Plus, Star } from 'lucide-react';
 import { ProductImage } from './ProductImage.jsx';
 
 export function ProductCard({
@@ -13,7 +13,7 @@ export function ProductCard({
 }) {
   return (
     <div
-      className={`product-card card-enter group ${isAdded ? '!border-gray-900 !shadow-[0_6px_20px_rgba(0,0,0,0.1)]' : ''} ${disabled ? 'opacity-75' : ''}`}
+      className={`product-card card-enter group ${isAdded ? '!border-primary' : ''} ${disabled ? 'opacity-75' : ''}`}
       style={{ animationDelay: `${(index % 6) * 40}ms` }}
       onClick={() => onDetail(product)}
       role="button"
@@ -26,30 +26,53 @@ export function ProductCard({
         }
       }}
     >
-      <div className="relative w-full aspect-square flex items-center justify-center bg-gradient-to-b from-gray-50 to-gray-100 rounded-[6px] mb-2.5 overflow-hidden border border-gray-100 p-2">
+      <div className="relative w-full aspect-square flex items-center justify-center bg-soft rounded-[14px] mb-2.5 overflow-hidden border border-border p-2">
         <ProductImage
           src={product.image}
           alt={product.name}
           className="w-full h-full drop-shadow-md transition-transform duration-200 group-hover:scale-110"
         />
         {product.badge && (
-          <span className="absolute top-1.5 left-1.5 text-[9px] font-bold tracking-[0.06em] uppercase bg-gray-900 text-white px-2 py-0.5 rounded-[6px]">
+          <span className="absolute top-1.5 left-1.5 text-[9px] font-medium tracking-[0.06em] uppercase bg-primary text-white px-2 py-0.5 rounded-full">
             {product.badge}
           </span>
         )}
         {isAdded && (
-          <span className="pop-in absolute bottom-1.5 left-1.5 inline-flex items-center gap-1 text-[9px] font-bold tracking-[0.06em] uppercase bg-emerald-600 text-white px-2 py-0.5 rounded-[6px]">
+          <span className="pop-in absolute bottom-1.5 left-1.5 inline-flex items-center gap-1 text-[9px] font-medium tracking-[0.06em] uppercase bg-primary text-white px-2 py-0.5 rounded-full">
             <Check size={10} /> {qty > 1 ? `×${qty}` : 'Added'}
           </span>
         )}
-        <span className="absolute top-1.5 right-1.5 w-5 h-5 hidden group-hover:flex group-focus-within:flex items-center justify-center rounded-[6px] bg-white shadow-md text-gray-500">
+        <span className="absolute top-1.5 right-1.5 w-5 h-5 hidden group-hover:flex group-focus-within:flex items-center justify-center rounded-full bg-white shadow-md text-secondary">
           <Info size={12} />
         </span>
       </div>
-      <p className="text-xs font-semibold text-gray-900 mb-0.5 leading-snug">{product.name}</p>
-      <p className="text-[11px] text-gray-400 mb-2 tabular-nums">
+      <p className="text-xs font-semibold text-primary mb-1 leading-snug w-full truncate">
+        {product.name}
+      </p>
+      <p className="inline-flex items-center gap-1 text-[10px] text-secondary mb-1 tabular-nums">
+        <Star size={11} className="fill-amber-400 text-amber-400 shrink-0" aria-hidden="true" />
+        <span className="font-semibold text-primary">{product.rating}</span>
+        <span className="truncate">({product.reviews})</span>
+      </p>
+      <p className="text-[11px] text-secondary leading-snug line-clamp-2 min-h-[28px] mb-1.5 w-full">
+        {product.tagline}
+      </p>
+      {product.specs?.length > 0 && (
+        <p className="flex items-center justify-center gap-1 mb-2 w-full min-w-0">
+          {product.specs.slice(0, 2).map((s) => (
+            <span
+              key={s.label}
+              title={`${s.label}: ${s.value}`}
+              className="text-[9px] text-secondary border border-border rounded-full px-2 py-0.5 truncate max-w-full"
+            >
+              {s.value}
+            </span>
+          ))}
+        </p>
+      )}
+      <p className="text-sm font-bold text-primary mb-2 tabular-nums">
         ${product.price}
-        <span className="text-[9px]">/mo</span>
+        <span className="text-[10px] font-medium text-secondary">/mo</span>
       </p>
       <button
         type="button"
@@ -68,7 +91,7 @@ export function ProductCard({
               ? `${product.name} in setup — add again`
               : `Add ${product.name} to setup`
         }
-        className={`add-btn w-full justify-center active:scale-95 ${isAdded && !disabled ? '!bg-white !text-gray-900 hover:!bg-gray-100' : ''} disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-900 disabled:hover:border-gray-900`}
+        className={`add-btn justify-center active:scale-95 ${isAdded && !disabled ? '!bg-transparent !text-primary' : ''} disabled:opacity-50 disabled:cursor-not-allowed`}
         onClick={(e) => {
           e.stopPropagation();
           if (!disabled) onAdd(product);

@@ -15,27 +15,153 @@
 
 /* Focus visibility — keyboard users */
 :focus-visible {
-  outline: 2px solid #111827;
+  outline: 2px solid #222222;
   outline-offset: 2px;
 }
 button:focus:not(:focus-visible) {
   outline: none;
 }
 
+/* ── Portfolio minimal primitives ── */
+.hover-lift {
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.2s;
+}
+.hover-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  background: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  border-radius: 999px;
+  padding: 10px 24px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background 0.2s,
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.btn-primary:hover:not(:disabled) {
+  background: #333;
+  border-color: #333;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+}
+.btn-primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-primary);
+  background: transparent;
+  border: 1px solid var(--color-primary);
+  border-radius: 999px;
+  padding: 10px 24px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.btn-outline:hover:not(:disabled) {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.link-underline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-primary);
+  border-bottom: 1px solid var(--color-primary);
+  padding-bottom: 2px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.link-underline:hover {
+  opacity: 0.7;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  font-size: 13px;
+  color: var(--color-secondary);
+  background: #fff;
+  transition:
+    border-color 0.2s,
+    color 0.2s;
+}
+.pill:hover {
+  border-color: var(--color-primary);
+}
+
+.arrow-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    transform 0.2s;
+  flex-shrink: 0;
+}
+.arrow-circle:hover {
+  background: #333;
+  transform: translateX(2px);
+}
+
 .glass-card {
   background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--color-border);
+  border-radius: 24px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
 }
 
 .product-card {
   background: #ffffff;
-  border: 1.5px solid #e5e7eb;
-  border-radius: 6px;
+  border: 1.5px solid var(--color-border);
+  border-radius: 20px;
   padding: 14px 10px;
   cursor: pointer;
-  transition: all 0.22s ease;
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.2s;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -44,9 +170,9 @@ button:focus:not(:focus-visible) {
   overflow: hidden;
 }
 .product-card:hover {
-  border-color: #111827;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  border-color: var(--color-primary);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
 }
 
 .tab-btn {
@@ -58,7 +184,7 @@ button:focus:not(:focus-visible) {
   background: transparent;
   cursor: pointer;
   transition: all 0.2s;
-  color: #6b7280;
+  color: var(--color-secondary);
   border-bottom: 2px solid transparent;
   display: flex;
   align-items: center;
@@ -67,34 +193,39 @@ button:focus:not(:focus-visible) {
   letter-spacing: 0.02em;
 }
 .tab-btn.active {
-  color: #111827;
-  border-bottom-color: #111827;
-  background: #f3f4f6;
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+  background: var(--color-tertiary);
 }
 .tab-btn:hover:not(.active) {
-  color: #374151;
-  background: #f9fafb;
+  color: var(--color-primary);
+  background: var(--color-soft);
 }
 
+/* Legacy alias kept for ProductCard — maps to portfolio primary pill */
 .add-btn {
   margin-top: auto;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 4px;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 5px 14px;
-  border-radius: 6px;
-  border: 1.5px solid #111827;
-  background: #111827;
+  justify-content: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--color-primary);
+  background: var(--color-primary);
   color: #ffffff;
   cursor: pointer;
-  transition: all 0.2s;
-  letter-spacing: 0.03em;
+  transition:
+    background 0.2s,
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  letter-spacing: 0.02em;
+  width: 100%;
 }
-.add-btn:hover {
-  background: #374151;
-  border-color: #374151;
+.add-btn:hover:not(:disabled) {
+  background: #333;
+  border-color: #333;
 }
 
 .remove-btn {
@@ -102,7 +233,7 @@ button:focus:not(:focus-visible) {
   background: #ef4444;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 50%;
   width: 28px;
   height: 28px;
   display: flex;
@@ -123,7 +254,7 @@ button:focus:not(:focus-visible) {
 }
 .remove-btn:focus-visible {
   opacity: 1;
-  outline: 2px solid #111827;
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 .group-item:hover .remove-btn,
@@ -138,14 +269,14 @@ button:focus:not(:focus-visible) {
 }
 
 .canvas-bg {
-  background: #f3f4f6;
-  border: 1.5px dashed #d1d5db;
-  border-radius: 12px;
+  background: var(--color-tertiary);
+  border: 1px solid var(--color-border);
+  border-radius: 24px;
 }
 
 /* Subtle studio dot-grid over the canvas background */
 .canvas-grid {
-  background-image: radial-gradient(circle, #e2e5ea 1px, transparent 1px);
+  background-image: radial-gradient(circle, #e3e3e3 1px, transparent 1px);
   background-size: 22px 22px;
 }
 /* Studio floor shadow under desk/chair */
@@ -161,14 +292,16 @@ button:focus:not(:focus-visible) {
 }
 
 .total-pill {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 18px;
+  padding: 6px 16px;
   background: #ffffff;
-  border: 1.5px solid #e5e7eb;
+  border: 1px solid var(--color-border);
   border-radius: 999px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  font-size: 13px;
+  color: var(--color-secondary);
 }
 
 .modal-overlay {
@@ -184,50 +317,57 @@ button:focus:not(:focus-visible) {
 }
 .modal-box {
   background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 24px;
   max-width: 420px;
   width: 100%;
   padding: 36px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
 }
 .modal-action-btn {
   flex: 1;
-  padding: 14px;
-  border-radius: 6px;
-  font-size: 15px;
-  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    opacity 0.2s;
 }
 
-/* High-contrast CTA for dark surfaces (ActionBar) */
+/* Legacy alias kept for ActionBar — maps to portfolio primary pill */
 .checkout-btn-light {
-  padding: 14px 28px;
-  background: #ffffff;
-  color: #111827;
-  border: none;
-  border-radius: 6px;
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.22s;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
-  letter-spacing: 0.01em;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 24px;
+  background: var(--color-primary);
+  color: #fff;
+  border: 1px solid var(--color-primary);
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
   white-space: nowrap;
+  transition:
+    background 0.2s,
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .checkout-btn-light:hover:not(:disabled) {
-  background: #f3f4f6;
+  background: #333;
+  border-color: #333;
   transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
 }
 .checkout-btn-light:disabled {
-  opacity: 0.55;
+  opacity: 0.45;
   cursor: not-allowed;
   box-shadow: none;
+  transform: none;
 }
 
 /* Modal entrance */

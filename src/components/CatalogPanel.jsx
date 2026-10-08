@@ -36,10 +36,10 @@ export function CatalogPanel({ activeTab, onTabChange, setup, onAdd, onDetail })
   return (
     <div
       id="catalog-panel"
-      className="catalog-panel glass-card w-full lg:w-[300px] shrink-0 flex flex-col h-[640px] max-h-[320px] lg:max-h-none lg:sticky lg:top-4 overflow-hidden"
+      className="catalog-panel glass-card !rounded-[6px] w-full lg:w-[300px] shrink-0 flex flex-col h-[640px] max-h-[320px] lg:max-h-none lg:sticky lg:top-4 overflow-hidden"
     >
       {/* Tabs */}
-      <div className="flex border-b border-gray-200" role="tablist" aria-label="Catalog categories">
+      <div className="flex border-b border-border" role="tablist" aria-label="Catalog categories">
         {Object.values(CATEGORIES).map((cat) => {
           const Icon = CAT_ICONS[cat];
           const active = activeTab === cat;
@@ -58,8 +58,10 @@ export function CatalogPanel({ activeTab, onTabChange, setup, onAdd, onDetail })
               {count > 0 && (
                 <span
                   aria-hidden="true"
-                  className={`text-[10px] font-bold px-1.5 py-0.5 rounded-[6px] tabular-nums ${
-                    active ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-600'
+                  className={`text-[10px] font-medium px-2 py-0.5 rounded-full tabular-nums border ${
+                    active
+                      ? 'bg-primary text-white border-primary'
+                      : 'bg-tertiary text-secondary border-border'
                   }`}
                 >
                   {count}
@@ -87,7 +89,7 @@ export function CatalogPanel({ activeTab, onTabChange, setup, onAdd, onDetail })
         {activeTab === CATEGORIES.ACCESSORIES && monitorsFull && (
           <p
             role="status"
-            className="text-center mt-3 text-[11px] text-amber-900 bg-amber-100 px-3 py-1.5 rounded-[6px] border border-amber-200"
+            className="pill !text-[11px] justify-center text-center mt-3 !text-amber-900 !border-amber-200 !bg-amber-50"
           >
             Max {MAX_MONITORS} monitors reached — remove one to swap
           </p>

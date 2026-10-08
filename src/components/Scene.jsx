@@ -13,11 +13,11 @@ export function Scene({ setup, total, lamps, keyboards, mice, isEmpty, onRemove,
   const animatedTotal = Math.round(useAnimatedNumber(total));
 
   return (
-    <div className="glass-card p-5 relative !shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
+    <div className="glass-card !rounded-[6px] p-5 relative">
       {/* Total badge */}
-      <div className="absolute top-4 right-4 z-10 total-pill !bg-white/85 !backdrop-blur-md !shadow-lg">
-        <span className="text-xs text-gray-600 font-medium">Monthly</span>
-        <span className="text-xl font-extrabold text-gray-900 tabular-nums" aria-live="polite">
+      <div className="absolute top-4 right-4 z-10 total-pill">
+        <span className="text-xs font-medium">Monthly</span>
+        <span className="text-base font-bold text-primary tabular-nums" aria-live="polite">
           ${animatedTotal}
         </span>
       </div>
@@ -55,7 +55,7 @@ export function Scene({ setup, total, lamps, keyboards, mice, isEmpty, onRemove,
 
         {/* Hint strip when desk missing but items floating */}
         {showFloating && (
-          <p className="absolute bottom-3 left-1/2 -translate-x-1/2 text-[11px] font-medium text-gray-500 bg-white/85 backdrop-blur px-3 py-1.5 rounded-full border border-gray-200 shadow-sm whitespace-nowrap">
+          <p className="pill absolute bottom-3 left-1/2 -translate-x-1/2 !text-[11px] whitespace-nowrap shadow-sm">
             Add a desk to anchor your setup
           </p>
         )}

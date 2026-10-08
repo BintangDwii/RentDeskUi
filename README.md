@@ -73,3 +73,14 @@ src/
 - **Rules**: max `MAX_MONITORS` monitors; keyboard/mouse are singletons
   (re-adding replaces). Constants live in `data/catalog.js`.
 - Assets use absolute `/assets/...` paths from `public/`.
+
+Approach & Tech Choices:
+
+I chose to stick strictly to the required tech stack (HTML, Tailwind CSS, and vanilla JavaScript)
+as I am already familiar with them. This enabled me to build a clean, responsive, and functional workspace
+builder efficiently without unnecessary framework complexity.
+
+What I'd Improve with More Time:
+
+If given more time, I would expand the product catalog with more variety and detailed specs, enhance the UI design
+with richer visual animations, and potentially upgrade the 2D canvas into a fully interactive 3D workspace viewer.

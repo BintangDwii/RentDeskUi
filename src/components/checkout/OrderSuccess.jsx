@@ -1,4 +1,5 @@
 import { CheckCircle2 } from 'lucide-react';
+import { fmtMoney } from '../../utils/pricing.js';
 
 /** Confirmation view shown after the order is placed. */
 export function OrderSuccess({ order, onClose }) {
@@ -16,8 +17,8 @@ export function OrderSuccess({ order, onClose }) {
           <>
             {' '}
             —{' '}
-            <span className="font-bold text-gray-900 tabular-nums">${order.contract}</span> total (
-            <span className="tabular-nums">${order.monthly}/mo</span>)
+            <span className="font-bold text-gray-900 tabular-nums">${fmtMoney(order.contract)}</span> total (
+            <span className="tabular-nums">${fmtMoney(order.monthly)}/mo</span>)
           </>
         ) : null}{' '}
         is confirmed for this demo. We&apos;ll deliver &amp; assemble anywhere in Bali within 48h.

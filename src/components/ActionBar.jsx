@@ -1,5 +1,6 @@
 import { ShoppingCart, Truck } from 'lucide-react';
 import { useAnimatedNumber } from '../hooks/useAnimatedNumber.js';
+import { fmtMoney } from '../utils/pricing.js';
 
 export function ActionBar({ total, onCheckout }) {
   const empty = total === 0;
@@ -22,7 +23,7 @@ export function ActionBar({ total, onCheckout }) {
           onClick={onCheckout}
         >
           <ShoppingCart size={16} />
-          {empty ? 'Pick items to start' : `Rent Setup — $${animatedTotal}/mo ↗`}
+          {empty ? 'Pick items to start' : `Rent Setup $${fmtMoney(animatedTotal)}/mo ↗`}
         </button>
       </div>
     </div>

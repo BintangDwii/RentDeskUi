@@ -24,3 +24,7 @@ export function contractTotal(monthlyTotal, plan) {
 export function depositAmount(monthlyTotal, plan) {
   return discountedMonthly(monthlyTotal, plan);
 }
+
+/** Format a USD amount with thousands separators (1887 → "1,887"). */
+export const fmtMoney = (n) =>
+  Number(n).toLocaleString('en-US', { maximumFractionDigits: 2, minimumFractionDigits: 0 });

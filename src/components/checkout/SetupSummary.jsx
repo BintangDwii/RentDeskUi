@@ -1,6 +1,7 @@
 import { X } from 'lucide-react';
 import { ProductImage } from '../ProductImage.jsx';
 import { SectionTitle } from './SectionTitle.jsx';
+import { fmtMoney } from '../../utils/pricing.js';
 
 function ItemRow({ image, name, price, onRemove }) {
   return (
@@ -14,7 +15,7 @@ function ItemRow({ image, name, price, onRemove }) {
         </span>
       </span>
       <span className="inline-flex items-center gap-2 shrink-0">
-        <span className="text-primary font-semibold text-xs tabular-nums">${price}/mo</span>
+        <span className="text-primary font-semibold text-xs tabular-nums">${fmtMoney(price)}/mo</span>
         <button
           type="button"
           aria-label={`Remove ${name}`}

@@ -1,6 +1,6 @@
 import { ShoppingBag } from 'lucide-react';
 import { DELIVERY } from '../../data/catalog.js';
-import { discountAmount } from '../../utils/pricing.js';
+import { discountAmount, fmtMoney } from '../../utils/pricing.js';
 import { SectionTitle } from './SectionTitle.jsx';
 
 function BreakdownRow({ label, value, accent = false, strong = false, tint = false, last = false }) {
@@ -48,22 +48,22 @@ export function PriceBreakdown({ total, plan, monthly, contract, deposit }) {
     <div className="mb-5">
       <SectionTitle>Price breakdown</SectionTitle>
       <ul className="list-none flex flex-col bg-tertiary border border-border rounded-[16px] overflow-hidden">
-        <BreakdownRow label="Subtotal" value={`$${total}/mo`} />
+        <BreakdownRow label="Subtotal" value={`$${fmtMoney(total)}/mo`} />
         <BreakdownRow
           label={`Discount (${Math.round(plan.discount * 100)}%)`}
-          value={plan.discount > 0 ? `−$${discountAmount(total, plan)}` : '—'}
+          value={plan.discount > 0 ? `−$${fmtMoney(discountAmount(total, plan))}` : '—'}
           accent={plan.discount > 0}
         />
-        <BreakdownRow label="Monthly rate" value={`$${monthly}/mo`} tint />
+        <BreakdownRow label="Monthly rate" value={`$${fmtMoney(monthly)}/mo`} tint />
         <BreakdownRow
           label={`Total for ${plan.months} mo`}
-          value={`$${contract}`}
+          value={`$${fmtMoney(contract)}`}
           strong
         />
-        <BreakdownRow label="Deposit (refundable)" value={`$${deposit}`} />
+        <BreakdownRow label="Deposit (refundable)" value={`$${fmtMoney(deposit)}`} />
         <BreakdownRow
           label="Delivery"
-          value={DELIVERY.fee === 0 ? 'Free' : `$${DELIVERY.fee}`}
+          value={DELIVERY.fee === 0 ? 'Free' : `$${fmtMoney(DELIVERY.fee)}`}
           accent={DELIVERY.fee === 0}
           last
         />

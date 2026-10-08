@@ -1,11 +1,12 @@
 import { Plus, ShoppingCart } from 'lucide-react';
 import { Rating } from '../ui/Rating.jsx';
 import { ProductSpecList } from './ProductSpecList.jsx';
+import { fmtMoney } from '../../utils/pricing.js';
 
 function PriceFacts({ price }) {
   const facts = [
-    { label: 'Monthly', value: `$${price}/mo` },
-    { label: 'Deposit', value: `$${price} refundable` },
+    { label: 'Monthly', value: `$${fmtMoney(price)}/mo` },
+    { label: 'Deposit', value: `$${fmtMoney(price)} refundable` },
     { label: 'Delivery', value: 'Free · 48h' },
   ];
   return (

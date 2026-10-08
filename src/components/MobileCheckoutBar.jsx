@@ -1,5 +1,6 @@
 import { ShoppingCart } from 'lucide-react';
 import { useAnimatedNumber } from '../hooks/useAnimatedNumber.js';
+import { fmtMoney } from '../utils/pricing.js';
 
 /**
  * Always-visible mobile checkout CTA. Fixed to the bottom of the viewport so
@@ -19,7 +20,7 @@ export function MobileCheckoutBar({ total, onCheckout }) {
         onClick={onCheckout}
       >
         <ShoppingCart size={16} />
-        {empty ? 'Pick items to start' : `Rent Setup — $${animatedTotal}/mo ↗`}
+        {empty ? 'Pick items to start' : `Rent Setup $${fmtMoney(animatedTotal)}/mo ↗`}
       </button>
     </div>
   );

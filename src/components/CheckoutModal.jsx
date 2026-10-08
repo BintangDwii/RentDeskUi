@@ -7,6 +7,7 @@ import {
   discountedMonthly,
   getPlan,
   round2,
+  fmtMoney,
 } from '../utils/pricing.js';
 import { Modal } from './ui/Modal.jsx';
 import { buildCheckoutGroups } from './checkout/checkoutGroups.js';
@@ -75,7 +76,9 @@ export function CheckoutModal({ setup, total, placedOrder, onClose, onConfirm, o
               className="modal-action-btn btn-primary tabular-nums w-full"
               onClick={() => onConfirm({ contract, months: plan.months, monthly })}
             >
-              Confirm — ${animatedContract} ↗
+              {plan.months === 1
+                ? `Confirm Rent $${fmtMoney(animatedMonthly)}/mo ↗`
+                : `Confirm $${fmtMoney(animatedContract)} Total ↗`}
             </button>
           </div>
         </>

@@ -44,7 +44,7 @@ export function DeskLayer({ desk, monitors, lamps, keyboards, mice, onRemove }) 
                 alt={m.name}
                 className="monitor-img"
                 style={{
-                  '--mw': `${getMonitorWidth(m, monitors.length)}px`,
+                  '--mw': `${getMonitorWidth(m)}px`,
                   filter: 'drop-shadow(0 12px 28px rgba(0,0,0,0.8))',
                 }}
               />

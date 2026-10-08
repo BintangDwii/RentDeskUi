@@ -30,7 +30,7 @@ export function FloatingLayer({ monitors, accessories, onRemove }) {
                 alt={m.name}
                 className="monitor-img"
                 style={{
-                  '--mw': `${getMonitorWidth(m, monitors.length)}px`,
+                  '--mw': `${getMonitorWidth(m)}px`,
                   filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.7))',
                 }}
               />

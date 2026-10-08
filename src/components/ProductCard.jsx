@@ -33,7 +33,7 @@ export function ProductCard({
           className="w-full h-full drop-shadow-md transition-transform duration-200 group-hover:scale-110"
         />
         {product.badge && (
-          <span className="absolute top-1.5 left-1.5 text-[9px] font-medium tracking-[0.06em] uppercase bg-primary text-white px-2 py-0.5 rounded-full">
+          <span className="absolute top-1.5 left-1.5 text-[9px] font-medium tracking-[0.06em] uppercase bg-accent text-white px-2 py-0.5 rounded-full">
             {product.badge}
           </span>
         )}

@@ -36,7 +36,7 @@ export function CatalogPanel({ activeTab, onTabChange, setup, onAdd, onDetail })
                 <span
                   aria-hidden="true"
                   className={`text-[10px] font-medium px-2 py-0.5 rounded-full tabular-nums border ${active
-                      ? 'bg-primary text-white border-primary'
+                      ? 'bg-accent text-white border-accent'
                       : 'bg-tertiary text-secondary border-border'
                     }`}
                 >
